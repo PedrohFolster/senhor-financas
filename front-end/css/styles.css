@@ -1,0 +1,25 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam&family=Lato:wght@700&display=swap"); 
+
+:root { 
+    --fonte-titulo: "Lato", sans-serif; 
+    --fonte-texto: "Kalam", cursive; 
+    --cor-principal: #112D4E; 
+    --cor-secundaria: #3F72AF; 
+    --cor-tercearia: #DBE2EF; 
+    --cor-fonte: #F9F7F7; 
+    --cor-preto: #000000; 
+    --cor-fundo: linear-gradient(to bottom, var(--cor-secundaria), 70%, var(--cor-principal)); 
+} 
+
+ 
+
+*{ 
+    padding: 0; 
+    margin: 0; 
+    box-sizing: border-box; 
+} 
+
+body { 
+    background: var(--cor-fundo); 
+    color: var(--cor-fonte); 
+} 
