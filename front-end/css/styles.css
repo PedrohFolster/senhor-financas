@@ -45,7 +45,7 @@ body {
     color: var(--fonte-titulo);
     text-align: center;
     font-size: 3rem;
-    padding-top: 20vh;
+    padding-top: 15vh;
 }
 
 .inicio h4 {
@@ -54,12 +54,13 @@ body {
     text-align: center;
     font-size: 1rem;
     padding: 5px;
+    font-weight: normal;
 }
 
 /* Estilo da seção 'login' */
 .login {
     text-align: center;
-    padding: 20px;
+    padding: 20px; /*a*/
 }
 
 .input-container {
@@ -77,24 +78,42 @@ label {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
 }
 
-.btn {
+.button-container {
+    text-align: center; /* Centraliza os botões horizontalmente */
+}
+
+.btn-entrar {
+    width: 20rem;
     display: inline-block;
     padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
+    background-color: #ffffff;
+    color: #000;
     text-decoration: none;
     border-radius: 5px;
-    margin: 10px;
+    margin: 10px; /* Margem entre os botões */
+    font-size: 16px;
+    font-family: var(--fonte-texto);
+    font-weight: bold;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
+}
+
+.btn-criarconta {
+    display: block;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
     font-size: 16px;
 }
 
 /* Estilo da seção 'desenvolvido' */
 .desenvolvido {
     text-align: center;
-    padding: 20px;
+    padding-top: 200px;
 }
 
 .desenvolvido h3 {
