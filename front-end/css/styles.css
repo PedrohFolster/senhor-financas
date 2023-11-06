@@ -126,3 +126,61 @@ label {
     color: #666;
     margin-top: 20px; /* Espaço entre o último botão e o h3 */
 }
+
+/* Seção 'CRIAR-CONTA' */
+
+.titulo-cadastro {
+    text-align: center;
+    padding: 20px;
+}
+
+.titulo-cadastro h1 {
+    font-size: 24px;
+    margin-top: 50px; /* Espaço entre o topo e o h1 */
+}
+
+.titulo-cadastro h1 {
+    font-family: "Lato";
+    color: var(--fonte-titulo);
+    text-align: center;
+    font-size: 3rem;
+    padding-top: 6vh;
+}
+
+.titulo-cadastro h4 {
+    font-family: "Kalam";
+    color: var(--fonte-texto);
+    text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+    font-weight: normal;
+}
+
+/* Estilo para a seção 'cadastro-usuario' */
+
+.cadastro-usuario {
+    text-align: center;
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.input-registrar {
+    margin: 10px 20px; /* Adiciona espaçamento vertical e horizontal entre os campos */
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 16px;
+}
+
+.input-cadastro {
+    width: 20rem;
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
+}
