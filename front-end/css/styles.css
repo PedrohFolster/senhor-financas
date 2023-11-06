@@ -70,6 +70,7 @@ body {
 label {
     display: block;
     font-size: 16px;
+    padding-right: 270px;
 }
 
 
@@ -100,6 +101,10 @@ label {
     font-weight: bold;
     border-radius: 10px;
     border: 2px solid var(--cor-preto);
+}
+
+.btn-entrar:hover {
+    background-color: var(--cor-secundaria);
 }
 
 .btn-criarconta {
