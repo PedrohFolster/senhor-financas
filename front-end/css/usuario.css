@@ -28,20 +28,19 @@ body {
     font-family: var(--fonte-texto);
 }
 
+/* Seção 'CRIAR-CONTA' */
 
-
-/* Estilo da seção 'inicio' */
-.inicio {
+.titulo-cadastro {
     text-align: center;
     padding: 20px;
 }
 
-.inicio h1 {
+.titulo-cadastro h1 {
     font-size: 24px;
     margin-top: 50px; /* Espaço entre o topo e o h1 */
 }
 
-.inicio h1 {
+.titulo-cadastro h1 {
     font-family: "Lato";
     color: var(--fonte-titulo);
     text-align: center;
@@ -49,7 +48,7 @@ body {
     padding-top: 6vh;
 }
 
-.inicio h4 {
+.titulo-cadastro h4 {
     font-family: "Kalam";
     color: var(--fonte-texto);
     text-align: center;
@@ -58,14 +57,29 @@ body {
     font-weight: normal;
 }
 
-/* Estilo da seção 'login' */
-.login {
+/* Estilo para a seção 'cadastro-usuario' */
+
+.cadastro-usuario {
     text-align: center;
-    padding: 20px; /*a*/
+    padding-top: 30px;
+    display: flex;
+    padding-left: 4rem;
+    justify-content: center;
 }
 
-.input-container {
-    margin: 10px 0;
+.input-registrar {
+    margin: 10px 10px; /* Adiciona espaçamento vertical e horizontal entre os campos */
+    text-align: left;
+}
+
+
+.input-cadastro {
+    width: 20rem;
+    padding: 8px;
+    font-size: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
 }
 
 label {
@@ -74,49 +88,41 @@ label {
     padding-right: 270px;
 }
 
-
-.input {
-    width: 20rem;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-    border: 2px solid var(--cor-preto);
+.botao-cadastrar-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
 }
 
-.button-container {
-    text-align: center; /* Centraliza os botões horizontalmente */
+.cadastrar-btn {
+    text-align: center;
 }
 
-.btn-entrar {
+
+.cadastrar-botao {
+    align-items: center;
     width: 20rem;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 5px 20px;
     background-color: #ffffff;
     color: #000;
     text-decoration: none;
     border-radius: 5px;
     margin: 10px; /* Margem entre os botões */
     font-size: 16px;
+    text-align: center;
     font-family: var(--fonte-texto);
     font-weight: bold;
     border-radius: 10px;
     border: 2px solid var(--cor-preto);
-}
 
-.btn-entrar:hover {
+}
+    
+.cadastrar-botao:hover {
     background-color: var(--cor-secundaria);
 }
 
-.btn-criarconta {
-    display: block;
-    padding: 10px 20px;
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-/* Estilo da seção 'desenvolvido' */
 .desenvolvido {
     text-align: center;
     padding-top: 200px;
@@ -125,5 +131,5 @@ label {
 .desenvolvido h3 {
     font-size: 14px;
     color: #666;
-    margin-top: 20px; /* Espaço entre o último botão e o h3 */
+    margin-top: 20px;
 }
