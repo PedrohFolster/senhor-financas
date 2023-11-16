@@ -25,7 +25,6 @@ html, body {
 body {
     background: var(--cor-fundo);
     color: var(--cor-fonte);
-    font-family: var(--fonte-texto);
 }
 
 /* Parte lateral da página */
@@ -39,6 +38,7 @@ body {
     background-color: var(--cor-principal);
     border-color: #000000;
     border: 2px solid var(--cor-preto);
+    font-family: var(--fonte-titulo);
 }
 
 .logo {
@@ -48,7 +48,6 @@ body {
 }
 
 .lateral h3 {
-    font-family: var(--fonte-titulo);
     font-size: 1.2rem;
     color: var(--cor-fonte);
 }
@@ -83,7 +82,7 @@ hr {
 
 .btn:hover {
     color: var(--cor-fonte-branco);
-    background-color: var(--cor-hover);
+    background-color: var(--cor-secundaria);
 }
 
 /* Parte principal da página */
@@ -103,13 +102,13 @@ hr {
     text-align: center;
     width: 70%;
     margin: 0 auto;
-    padding: 20px 5%;
+    padding: 20px 1%;
     font-size: 1rem;
 }
 
 
 table {
-    width: 100%;
+    width: 122%;
     border-collapse: collapse;
 }
 
@@ -117,12 +116,66 @@ th, td {
     padding: 2px;
     text-align: center;
     border-bottom: 1px solid var(--cor-preto);
+    font-family: var(--fonte-texto);
+    font-weight: normal;
+}
+
+td {
+    color: #000000;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #B0C4DE;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #ffffff;
 }
 
 th {
     background-color: var(--cor-principal);
 }
 
-tr:hover {
-    background-color: var(--cor-principal);
+/* Botões */
+
+form {
+    display: flex;
+    justify-content: center;
+    padding-left: 15%;
+}
+
+.div-botao {
+    padding-top: 10px;
+    text-align: center;
+    margin: 0 5px; /* Removendo margem entre os botões */
+    
+}
+
+.botao {
+    width: 80px; /* Ajuste a largura conforme necessário */
+    height: 30px; /* Ajuste a altura conforme necessário */
+    margin: 0 5px; /* Adicionando margem lateral entre os botões */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
+    font-family: var(--fonte-titulo);
+    font-weight: normal;
+}
+
+.botao-acoes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.botao-editar,
+.botao-excluir {
+    width: 80px; /* Ajuste a largura conforme necessário */
+    height: 30px; /* Ajuste a altura conforme necessário */
+    margin: 0 5px; /* Adicionando margem lateral entre os botões */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 2px solid var(--cor-preto);
+    font-family: var(--fonte-titulo);
+    font-weight: bold;
 }
