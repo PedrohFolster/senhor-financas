@@ -1,0 +1,96 @@
+@import url("https://fonts.googleapis.com/css2?family=Kalam&family=Lato:wght@700&display=swap");
+
+:root {
+    --fonte-titulo: "Lato", sans-serif;
+    --fonte-texto: "Kalam", cursive;
+    --cor-principal: #112D4E;
+    --cor-secundaria: #3F72AF;
+    --cor-tercearia: #DBE2EF;
+    --cor-fonte: #F9F7F7;
+    --cor-preto: #000000;
+    --cor-fundo: linear-gradient(to bottom, var(--cor-secundaria) 0%, var(--cor-principal) 100%);
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+body {
+    background: var(--cor-fundo);
+    color: var(--cor-fonte);
+    font-family: var(--fonte-texto);
+}
+
+/* Parte lateral da página */
+
+.lateral {
+    width: 15%;
+    height: 100vh;
+    color: var(--cor-fonte);
+    text-align: center;
+    position: fixed;
+    background-color: var(--cor-principal);
+}
+
+.logo {
+    margin: 15px 0px;
+    padding: 40px 0px;
+    border-radius: 50%;
+}
+
+.lateral h3 {
+    font-family: var(--fonte-titulo);
+    font-size: 1.2rem;
+    color: var(--cor-fonte);
+}
+
+hr {
+    margin: 20px;
+    border-top: 1.6px solid var(--cor-fonte);
+}
+
+.links {
+    display: block;
+    text-align: center;
+    padding-top: 40px;
+    font-size: 1.2rem;
+
+}
+
+.links li {
+    padding: 15px 0px;
+}
+
+.links a {
+    color: var(--cor-fonte-branco);
+    text-decoration: none;
+    color: var(--cor-fonte);
+}
+
+.btn {
+    transition: ease-in-out .3s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    color: var(--cor-fonte-branco);
+    background-color: var(--cor-hover);
+}
+
+/* Parte principal da página */
+
+.titulo h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    font-family: var(--fonte-titulo);
+    font-weight: normal;
+    padding: 40px;
+    padding-left: 15%;
+}
