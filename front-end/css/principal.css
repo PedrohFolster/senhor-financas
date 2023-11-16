@@ -37,6 +37,8 @@ body {
     text-align: center;
     position: fixed;
     background-color: var(--cor-principal);
+    border-color: #000000;
+    border: 2px solid var(--cor-preto);
 }
 
 .logo {
@@ -93,4 +95,34 @@ hr {
     font-weight: normal;
     padding: 40px;
     padding-left: 15%;
+} 
+
+/* Tabela */
+
+.tabela {
+    text-align: center;
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px 5%;
+    font-size: 1rem;
+}
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 2px;
+    text-align: center;
+    border-bottom: 1px solid var(--cor-preto);
+}
+
+th {
+    background-color: var(--cor-principal);
+}
+
+tr:hover {
+    background-color: var(--cor-principal);
 }
