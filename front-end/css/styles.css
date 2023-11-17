@@ -77,7 +77,7 @@ label {
 
 .input {
     width: 20rem;
-    padding: 10px;
+    padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -91,12 +91,12 @@ label {
 .btn-entrar {
     width: 20rem;
     display: inline-block;
-    padding: 10px 20px;
+    padding: 5px 20px;
     background-color: #ffffff;
     color: #000;
     text-decoration: none;
     border-radius: 5px;
-    margin: 10px; /* Margem entre os botões */
+    margin: 15px; /* Margem entre os botões */
     font-size: 16px;
     font-family: var(--fonte-texto);
     font-weight: bold;
@@ -110,7 +110,6 @@ label {
 
 .btn-criarconta {
     display: block;
-    padding: 10px 20px;
     color: #fff;
     text-decoration: none;
     font-size: 16px;
@@ -119,7 +118,7 @@ label {
 /* Estilo da seção 'desenvolvido' */
 .desenvolvido {
     text-align: center;
-    padding-top: 300px;
+    padding-top: 250px;
 }
 
 .desenvolvido h3 {
