@@ -142,14 +142,20 @@ th {
 form {
     display: flex;
     justify-content: center;
-    padding-left: 15%;
+}
+
+.botao-editar:hover {
+    background-color: var(--cor-secundaria);
+}
+
+.botao-excluir:hover {
+    background-color: var(--cor-secundaria);
 }
 
 .div-botao {
     padding-top: 10px;
     text-align: center;
-    margin: 0 5px; /* Removendo margem entre os botões */
-    
+    margin: 0 5px; /* Removendo completamente a margem entre os botões */
 }
 
 .botao {
