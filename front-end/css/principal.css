@@ -115,7 +115,6 @@ table {
 th, td {
     padding: 2px;
     text-align: center;
-    border-bottom: 1px solid var(--cor-preto);
     font-family: var(--fonte-texto);
     font-weight: normal;
 }
@@ -134,6 +133,7 @@ tbody tr:nth-child(even) {
 
 th {
     background-color: var(--cor-principal);
+    border-bottom: 2px solid var(--cor-preto);
 }
 
 /* Botões */
@@ -178,4 +178,8 @@ form {
     border: 2px solid var(--cor-preto);
     font-family: var(--fonte-titulo);
     font-weight: bold;
+}
+
+.botao:hover {
+    background-color: var(--cor-secundaria);
 }
