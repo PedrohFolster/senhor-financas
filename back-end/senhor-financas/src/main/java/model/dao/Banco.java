@@ -12,24 +12,24 @@ import javax.sql.DataSource;
 
 
 public class Banco {
-	
+
 	private static final String NAME_DATASOURCE = "SenacDS";
-	
-	
+
+
 	public static Connection getConnection(){
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
 			DataSource ds = (DataSource) envContext.lookup(NAME_DATASOURCE);
 			Connection conn = ds.getConnection();
-			return conn; 
+			return conn;
 		} catch (Exception e) {
 			System.out.println("Erro ao obter a Connection.");
 			System.out.println("Erro: " + e.getMessage());
 			return null;
 		}
 	}
-	
+
 	public static void closeConnection(Connection conn){
 		try {
 			if(conn != null){
@@ -38,9 +38,9 @@ public class Banco {
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento da conexão.");
 			System.out.println("Erro: " + e.getMessage());
-		}	
+		}
 	}
-	
+
 	public static Statement getStatement(Connection conn){
 		try {
 			Statement stmt = conn.createStatement();
@@ -51,7 +51,7 @@ public class Banco {
 			return null;
 		}
 	}
-		
+
 	public static void closeStatement(Statement stmt){
 		try {
 			if(stmt != null){
@@ -60,9 +60,9 @@ public class Banco {
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento do Statement.");
 			System.out.println("Erro: " + e.getMessage());
-		}	
+		}
 	}
-	
+
 	public static PreparedStatement getPreparedStatement(Connection conn, String sql){
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -73,7 +73,7 @@ public class Banco {
 			return null;
 		}
 	}
-	
+
 	public static PreparedStatement getPreparedStatementWithPk(Connection conn, String sql){
 		try {
 			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -93,9 +93,9 @@ public class Banco {
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento do PreparedStatement.");
 			System.out.println("Erro: " + e.getMessage());
-		}	
+		}
 	}
-	
+
 	public static void closeResultSet(ResultSet result){
 		try {
 			if(result != null){
