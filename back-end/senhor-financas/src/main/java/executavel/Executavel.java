@@ -1,7 +1,7 @@
 package executavel;
 
-import model.bo.PessoaBO;
-import model.vo.PessoaVO;
+import model.bo.UsuarioBO;
+import model.vo.UsuarioVO;
 
 import java.util.ArrayList;
 
@@ -9,117 +9,110 @@ public class Executavel {
 
     public static void main(String[] args) {
 
-        PessoaBO pessoaBO = new PessoaBO();
+        UsuarioBO usuarioBO = new UsuarioBO();
 
-        // Cadastrar Pessoa - (cp)
-
-        // Cadastro OK
-        PessoaVO cp1 = new PessoaVO(0, "Adriano", "01234567899", 45);
-        cp1 = pessoaBO.cadastrarPessoaBO(cp1);
-        System.out.println(cp1.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        // Cadastrar Usuario - (cu)
 
         // Cadastro OK
-        PessoaVO cp2 = new PessoaVO(0, "Maria", "01234567898", 20);
-        cp2 = pessoaBO.cadastrarPessoaBO(cp2);
-        System.out.println(cp2.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        UsuarioVO cu1 = new UsuarioVO(0, "Adriano", "01234567899", "a@gmail.com", "10-02-2023", "a", "a");
+        cu1 = usuarioBO.cadastrarUsuarioBO(cu1);
+        System.out.println(cu1.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
 
         // Cadastro OK
-        PessoaVO cp3 = new PessoaVO(0, "Luciano", "01234567897", 40);
-        cp3 = pessoaBO.cadastrarPessoaBO(cp3);
-        System.out.println(cp3.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        UsuarioVO cu2 = new UsuarioVO(0, "Maria", "01234567898", "a@gmail.com", "10-02-2023", "a", "a");
+        cu2 = usuarioBO.cadastrarUsuarioBO(cu2);
+        System.out.println(cu2.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
+
+        // Cadastro OK
+        UsuarioVO cu3 = new UsuarioVO(0, "Luciano", "01234567897", "a@gmail.com", "10-02-2023", "a", "a");
+        cu3 = usuarioBO.cadastrarUsuarioBO(cu3);
+        System.out.println(cu3.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
 
         // Menor de Idade
-        PessoaVO cp4 = new PessoaVO(0, "Jose", "01234567896", 15);
-        cp4 = pessoaBO.cadastrarPessoaBO(cp4);
-        System.out.println(cp4.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        UsuarioVO cu4 = new UsuarioVO(0, "Jose", "01234567896", "a@gmail.com", "10-02-2023", "a", "a");
+        cu4 = usuarioBO.cadastrarUsuarioBO(cu4);
+        System.out.println(cu4.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
 
         // CPF nulo (validado pelo banco de dados)
-        PessoaVO cp5 = new PessoaVO(0, "João", null, 25);
-        cp5 = pessoaBO.cadastrarPessoaBO(cp5);
-        System.out.println(cp5.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        UsuarioVO cu5 = new UsuarioVO(0, "João", null, "a@gmail.com", "10-02-2023", "a", "a");
+        cu5 = usuarioBO.cadastrarUsuarioBO(cu5);
+        System.out.println(cu5.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
 
-        // Tentando cadastrar uma pessoa já cadastrada
-        cp1 = pessoaBO.cadastrarPessoaBO(cp1);
-        System.out.println(cp1.getIdPessoa() > 0 ? "Pessoa cadastrada com sucesso!!!" : "Houve um problema no cadastro!!!");
+        // Tentando cadastrar um usuario já cadastrado
+        cu1 = usuarioBO.cadastrarUsuarioBO(cu1);
+        System.out.println(cu1.getIdUsuario() > 0 ? "Usuario cadastrado com sucesso!!!" : "Houve um problema no cadastro!!!");
 
         System.out.println("\n---------------------------------------\n");
 
-        // Atualizar Pessoa (ap)
+        // Atualizar Usuario (au)
 
         // Atualização OK
-        PessoaVO ap1 = new PessoaVO(1, "", "", 0);
-        ap1 = pessoaBO.consultarPessoaBO(ap1);
-        ap1.setIdade(ap1.getIdade() + 1);
-        boolean resultado = pessoaBO.atualizarPessoaBO(ap1);
-        System.out.println(resultado ? "Pessoa Atualizada com Sucesso!!!" : "Houve um problema na Atualização!!!");
+        UsuarioVO au1 = new UsuarioVO(1, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        au1 = usuarioBO.consultarUsuarioBO(au1);
+        au1.setNome(au1.getNome() + "a");
+        boolean resultado = usuarioBO.atualizarUsuarioBO(au1);
+        System.out.println(resultado ? "Usuario Atualizado com Sucesso!!!" : "Houve um problema na Atualização!!!");
 
-        // Tentando atualizar uma pessoa inexistente
-        PessoaVO ap2 = new PessoaVO(100, "", "", 0);
-        ap2 = pessoaBO.consultarPessoaBO(ap2);
-        ap2.setIdade(ap2.getIdade() + 1);
-        resultado = pessoaBO.atualizarPessoaBO(ap2);
-        System.out.println(resultado ? "Pessoa Atualizada com Sucesso!!!" : "Houve um problema na Atualização!!!");
+        // Tentando atualizar um usuario inexistente
+        UsuarioVO au2 = new UsuarioVO(100, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        au2 = usuarioBO.consultarUsuarioBO(au2);
+        au2.setNome(au2.getNome() + "a");
+        resultado = usuarioBO.atualizarUsuarioBO(au2);
+        System.out.println(resultado ? "Usuario Atualizado com Sucesso!!!" : "Houve um problema na Atualização!!!");
 
-        // Tentando atualizar o cpf de uma pessoa para null
-        PessoaVO ap3 = new PessoaVO(2, "", "", 0);
-        ap3 = pessoaBO.consultarPessoaBO(ap3);
-        ap3.setCpf(null);
-        resultado = pessoaBO.atualizarPessoaBO(ap3);
-        System.out.println(resultado ? "Pessoa Atualizada com Sucesso!!!" : "Houve um problema na Atualização!!!");
-
-        // Tentando transformar uma pessoa em menor de idade
-        PessoaVO ap4 = new PessoaVO(2, "", "", 0);
-        ap4 = pessoaBO.consultarPessoaBO(ap4);
-        ap4.setIdade(10);
-        resultado = pessoaBO.atualizarPessoaBO(ap4);
-        System.out.println(resultado ? "Pessoa Atualizada com Sucesso!!!" : "Houve um problema na Atualização!!!");
+        // Tentando atualizar o cpf de um usuario para null
+        UsuarioVO au3 = new UsuarioVO(2, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        au3 = usuarioBO.consultarUsuarioBO(au3);
+        au3.setCpf(null);
+        resultado = usuarioBO.atualizarUsuarioBO(au3);
+        System.out.println(resultado ? "Usuario Atualizado com Sucesso!!!" : "Houve um problema na Atualização!!!");
 
         System.out.println("\n---------------------------------------\n");
 
-        // Excluir uma Pessoa - (ep)
+        // Excluir um Usuario - (eu)
 
         // Exclusão OK
-        PessoaVO ep1 = new PessoaVO(2, "", "", 0);
-        ep1 = pessoaBO.consultarPessoaBO(ep1);
-        resultado = pessoaBO.excluirPessoaBO(ep1);
-        System.out.println(resultado ? "Pessoa excluída com sucesso!!!" : "Houve um problema na Exclusão!!!");
+        UsuarioVO eu1 = new UsuarioVO(2, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        eu1 = usuarioBO.consultarUsuarioBO(eu1);
+        resultado = usuarioBO.excluirUsuarioBO(eu1);
+        System.out.println(resultado ? "Usuario excluído com sucesso!!!" : "Houve um problema na Exclusão!!!");
 
-        // Tentando excluir uma pessoa inexistente
-        PessoaVO ep2 = new PessoaVO(100, "", "", 0);
-        ep2 = pessoaBO.consultarPessoaBO(ep2);
-        resultado = pessoaBO.excluirPessoaBO(ep2);
-        System.out.println(resultado ? "Pessoa excluída com sucesso!!!" : "Houve um problema na Exclusão!!!");
+        // Tentando excluir um usuario inexistente
+        UsuarioVO eu2 = new UsuarioVO(100, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        eu2 = usuarioBO.consultarUsuarioBO(eu2);
+        resultado = usuarioBO.excluirUsuarioBO(eu2);
+        System.out.println(resultado ? "Usuario excluído com sucesso!!!" : "Houve um problema na Exclusão!!!");
 
         System.out.println("\n---------------------------------------\n");
 
-        // Consultar uma Pessoa ou Todas - (p)
+        // Consultar um Usuario ou Todos - (u)
 
-        // Consultar uma pessoa OK
-        PessoaVO p1 = new PessoaVO(3, "", "", 0);
-        p1 = pessoaBO.consultarPessoaBO(p1);
-        if (p1.getCpf() != null) {
-            System.out.println(p1);
+        // Consultar um usuario OK
+        UsuarioVO u1 = new UsuarioVO(3, "", "", "a@gmail.com", "10-02-2023", "a", "a");
+        u1 = usuarioBO.consultarUsuarioBO(u1);
+        if (u1.getCpf() != null) {
+            System.out.println(u1);
         } else {
-            System.out.println("\nPessoa não localizada na base de dados!!!");
+            System.out.println("\nUsuario não localizado na base de dados!!!");
         }
 
-        // Tentando consultar uma pessoa inexistente
-        PessoaVO p2 = new PessoaVO(100, "", null, 0);
-        p2 = pessoaBO.consultarPessoaBO(p2);
-        if (p2.getCpf() != null) {
-            System.out.println(p2);
+        // Tentando consultar um usuario inexistente
+        UsuarioVO u2 = new UsuarioVO(100, "", null, "a@gmail.com", "10-02-2023", "a", "a");
+        u2 = usuarioBO.consultarUsuarioBO(u2);
+        if (u2.getCpf() != null) {
+            System.out.println(u2);
         } else {
-            System.out.println("\nPessoa não localizada na base de dados!!!");
+            System.out.println("\nUsuario não localizado na base de dados!!!");
         }
 
-        // Consultando Todas as pessoas
-        ArrayList<PessoaVO> lista = pessoaBO.consultarTodasPessoasBO();
+        // Consultando Todos os usuarios
+        ArrayList<UsuarioVO> lista = usuarioBO.consultarTodasUsuariosBO();
         if (lista.isEmpty()) {
-            System.out.println("Não existem pessoas cadastradas na base de dados!!!");
+            System.out.println("Não existem usuarios cadastrados na base de dados!!!");
         } else {
-            System.out.println("\nLista de Pessoas: \n");
-            for (PessoaVO p : lista) {
-                System.out.println(p + "\n");
+            System.out.println("\nLista de Usuarios: \n");
+            for (UsuarioVO u : lista) {
+                System.out.println(u + "\n");
             }
         }
     }
