@@ -100,7 +100,7 @@ hr {
 
 .tabela {
     text-align: center;
-    width: 70%;
+    width: 100%;
     margin: 0 auto;
     padding: 20px 1%;
     font-size: 1rem;
@@ -108,7 +108,7 @@ hr {
 
 
 table {
-    width: 122%;
+    width: 100%;
     border-collapse: collapse;
 }
 
@@ -190,4 +190,8 @@ form {
 
 .botao:hover {
     background-color: var(--cor-secundaria);
+}
+
+.total-cell {
+    text-align: center; /* Centraliza o texto no footer */
 }

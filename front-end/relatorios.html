@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senhor Finanças</title>
-    <link rel="stylesheet" href="./css/principal.css">
+    <link rel="stylesheet" href="./css/receitas.css">
 </head>
 
 <body>
@@ -32,72 +32,82 @@
         </div>
     </section>
     <section class="tabela">
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Descrição</th>
-                    <th>Data</th>
-                    <th>Valor</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>28</td>
-                    <td>salário</td>
-                    <td>01/05/2023</td>
-                    <td>R$ 9.000,00</td>
-                    <td>
-                        <div class="botoes-acoes">
-                            <button class="botao-editar">Editar</button>
-                            <button class="botao-excluir">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>29</td>
-                    <td>consultorio</td>
-                    <td>10/06/2023</td>
-                    <td>R$ 6.000,00</td>
-                    <td>
-                        <div class="botoes-acoes">
-                            <button class="botao-editar">Editar</button>
-                            <button class="botao-excluir">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>30</td>
-                    <td>aulas</td>
-                    <td>21/07/2023</td>
-                    <td>R$ 5.000,00</td>
-                    <td>
-                        <div class="botoes-acoes">
-                            <button class="botao-editar">Editar</button>
-                            <button class="botao-excluir">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>31</td>
-                    <td>salário</td>
-                    <td>01/08/2023</td>
-                    <td>R$ 9.000,00</td>
-                    <td>
-                        <div class="botoes-acoes">
-                            <button class="botao-editar">Editar</button>
-                            <button class="botao-excluir">Excluir</button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-            <thead>
-                <tr>
-                    <th>Total - R$ 29.000,00</th>
-                </tr>
-            </thead>
-        </table>
+        <form action="">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Descrição</th>
+                        <th>Data</th>
+                        <th>Valor</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>28</td>
+                        <td>salário</td>
+                        <td>01/05/2023</td>
+                        <td>R$ 9.000,00</td>
+                        <td>
+                            <div class="botoes-acoes">
+                                <button type="submit" class="botao-editar"
+                                    formaction="./editarDespesas.html">Editar</button>
+                                <button type="submit" class="botao-excluir"
+                                    formaction="./receitas.html">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>29</td>
+                        <td>consultorio</td>
+                        <td>10/06/2023</td>
+                        <td>R$ 6.000,00</td>
+                        <td>
+                            <div class="botoes-acoes">
+                                <button type="submit" class="botao-editar"
+                                    formaction="./editarDespesas.html">Editar</button>
+                                <button type="submit" class="botao-excluir"
+                                    formaction="./receitas.html">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>30</td>
+                        <td>aulas</td>
+                        <td>21/07/2023</td>
+                        <td>R$ 5.000,00</td>
+                        <td>
+                            <div class="botoes-acoes">
+                                <button type="submit" class="botao-editar"
+                                    formaction="./editarDespesas.html">Editar</button>
+                                <button type="submit" class="botao-excluir"
+                                    formaction="./receitas.html">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>31</td>
+                        <td>salário</td>
+                        <td>01/08/2023</td>
+                        <td>R$ 9.000,00</td>
+                        <td>
+                            <div class="botoes-acoes">
+                                <button type="submit" class="botao-editar"
+                                    formaction="./editarDespesas.html">Editar</button>
+                                <button type="submit" class="botao-excluir"
+                                    formaction="./receitas.html">Excluir</button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th class="total-cell" colspan="5">Total - R$ 29.000,00</th>
+                    </tr>
+                </tfoot>
+            </table>
+        </form>
     </section>
     <section class="section-botao">
         <form action="">
@@ -108,7 +118,7 @@
                 <button class="botao" type="submit">Limpar</button>
             </div>
             <div class="div-botao">
-                <button class="botao" type="submit">Cadastrar</button>
+                <button type="submit" class="botao" formaction="./cadastrarReceitas.html">Cadastrar</button>
             </div>
         </form>
     </section>
