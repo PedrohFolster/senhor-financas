@@ -122,4 +122,32 @@ public class PessoaDAO {
         return listaPessoas;
     }
 
+    public PessoaVO consultarPessoaDAO(PessoaVO pessoaVO) {
+        Connection conn = Banco.getConnection();
+        Statement stmt = Banco.getStatement(conn);
+
+        ResultSet resultado = null;
+        PessoaVO pessoa = new PessoaVO();
+        String query = "SELECT idpessoa, nome, cpf, idade " +
+                        "FROM pessoa " +
+                        "WHERE idpessoa = " + pessoaVO.getIdPessoa();
+        try {
+            resultado = stmt.executeQuery(query);
+            if (resultado.next()) {
+                pessoa.setIdPessoa(Integer.parseInt(resultado.getString(1)));
+                pessoa.setNome(resultado.getString(2));
+                pessoa.setCpf(resultado.getString(3));
+                pessoa.setIdade(resultado.getInt(4));
+            }
+        } catch (SQLException erro) {
+            System.out.println("\nErro ao executar a query do método consultarPessoaDAO!");
+            System.out.println("Erro: " + erro.getMessage());
+        } finally {
+            Banco.closeResultSet(resultado);
+            Banco.closeStatement(stmt);
+            Banco.closeConnection(conn);
+        }
+        return pessoa;
+    }
+
 }
