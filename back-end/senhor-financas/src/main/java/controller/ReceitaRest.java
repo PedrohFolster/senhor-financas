@@ -60,5 +60,4 @@ public class ReceitaRest {
         ReceitaBO receitaBO = new ReceitaBO();
         return receitaBO.excluirReceitaBO(receitaVO);
     }
-
 }
