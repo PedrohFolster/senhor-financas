@@ -1,59 +1,33 @@
 package model.bo;
 
+import java.util.ArrayList;
 import model.dao.UsuarioDAO;
 import model.vo.UsuarioVO;
-
-import java.util.ArrayList;
 
 public class UsuarioBO {
 
     public UsuarioVO cadastrarUsuarioBO(UsuarioVO usuarioVO) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        if (usuarioDAO.verificarCadastroUsuarioBaseDadosDAO(usuarioVO)) {
-            System.out.println("\nUsuario já cadastrado na base de Dados.");
-        } else {
-            usuarioVO = usuarioDAO.cadastrarUsuarioDAO(usuarioVO);
-        }
-        return usuarioVO;
+        return usuarioDAO.cadastrarUsuarioDAO(usuarioVO);
+    }
+
+    public ArrayList<UsuarioVO> consultarTodosUsuariosBO() {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.consultarTodosUsuariosDAO();
+    }
+
+    public UsuarioVO consultarUsuarioBO(int idUsuario) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.consultarUsuarioDAO(idUsuario);
     }
 
     public boolean atualizarUsuarioBO(UsuarioVO usuarioVO) {
-        boolean resultado = false;
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        if (usuarioDAO.verificarCadastroUsuarioBaseDadosDAO(usuarioVO)) {
-            resultado = usuarioDAO.atualizarUsuarioDAO(usuarioVO);
-        }  else {
-            System.out.println("\nUsuario não existe na base de dados.");
-        }
-        return resultado;
+        return usuarioDAO.atualizarUsuarioDAO(usuarioVO);
     }
 
     public boolean excluirUsuarioBO(UsuarioVO usuarioVO) {
-        boolean resultado = false;
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        if (usuarioDAO.verificarCadastroUsuarioBaseDadosDAO(usuarioVO)) {
-            resultado = usuarioDAO.excluirUsuarioDAO(usuarioVO);
-        } else {
-            System.out.println("\nUsuario não existe na base de dados.");
-        }
-        return resultado;
-    }
-
-    public ArrayList<UsuarioVO> consultarTodasUsuariosBO() {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        ArrayList<UsuarioVO> listaUsuariosVO = usuarioDAO.consultarTodasUsuariosDAO();
-        if (listaUsuariosVO.isEmpty()) {
-            System.out.println("\nA lista de usuarios está vazia.");
-        }
-        return listaUsuariosVO;
-    }
-
-    public UsuarioVO consultarUsuarioBO(UsuarioVO usuarioVO) {
-        UsuarioDAO usuarioDAO = new UsuarioDAO();
-        UsuarioVO usuario = usuarioDAO.consultarUsuarioDAO(usuarioVO);
-        if (usuario == null) {
-            System.out.println("\nUsuario não localizado.");
-        }
-        return usuario;
+        return usuarioDAO.excluirUsuarioDAO(usuarioVO.getIdUsuario());
     }
 }
