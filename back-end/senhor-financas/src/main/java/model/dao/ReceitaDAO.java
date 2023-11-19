@@ -1,170 +1,159 @@
 package model.dao;
 
-import model.vo.ReceitaVO;
-
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import model.vo.ReceitaVO;
 
 public class ReceitaDAO {
 
-    public void cadastrarReceitaDAO(ReceitaVO receitaVO) {
+    public ReceitaVO cadastrarReceitaDAO(ReceitaVO receitaVO) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        ReceitaVO novaReceita = null;
 
         String query = "INSERT INTO receita (idusuario, descricao, valor, datareceita) VALUES (?, ?, ?, ?)";
 
         try {
-            pstmt = conn.prepareStatement(query);
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, receitaVO.getIdUsuario());
             pstmt.setString(2, receitaVO.getDescricao());
             pstmt.setBigDecimal(3, receitaVO.getValor());
-            pstmt.setTimestamp(4, Timestamp.valueOf(receitaVO.getDataReceita()));
+            pstmt.setObject(4, receitaVO.getDataReceita());
 
-            pstmt.executeUpdate();
-            System.out.println("Receita cadastrada com sucesso!");
-        } catch (SQLException e) {
-            System.out.println("Erro ao cadastrar receita: " + e.getMessage());
-        } finally {
-            Banco.closePreparedStatement(pstmt);
-            Banco.closeConnection(conn);
-        }
-    }
+            int affectedRows = pstmt.executeUpdate();
 
-    public boolean verificarExistenciaReceitaDAO(ReceitaVO receitaVO) {
-        Connection conn = Banco.getConnection();
-        Statement stmt = Banco.getStatement(conn);
-        ResultSet rs = null;
-
-        boolean existe = false;
-        String query = "SELECT idreceita FROM receita WHERE idreceita = " + receitaVO.getIdReceita();
-
-        try {
-            rs = stmt.executeQuery(query);
-            if (rs.next()) {
-                existe = true;
+            if (affectedRows > 0) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int idReceita = rs.getInt(1);
+                    novaReceita = consultarReceitaDAO(idReceita);
+                }
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao verificar existência da receita: " + e.getMessage());
+            System.out.println("Erro ao cadastrar a receita: " + e.getMessage());
         } finally {
             Banco.closeResultSet(rs);
-            Banco.closeStatement(stmt);
-            Banco.closeConnection(conn);
-        }
-
-        return existe;
-    }
-
-    public boolean atualizarReceitaDAO(ReceitaVO receitaVO) {
-        Connection conn = Banco.getConnection();
-        PreparedStatement pstmt = null;
-
-        boolean sucesso = false;
-        String query = "UPDATE receita SET idusuario=?, descricao=?, valor=?, datareceita=? WHERE idreceita=?";
-
-        try {
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, receitaVO.getIdUsuario());
-            pstmt.setString(2, receitaVO.getDescricao());
-            pstmt.setBigDecimal(3, receitaVO.getValor());
-            pstmt.setTimestamp(4, Timestamp.valueOf(receitaVO.getDataReceita()));
-            pstmt.setInt(5, receitaVO.getIdReceita());
-
-            if (pstmt.executeUpdate() > 0) {
-                sucesso = true;
-                System.out.println("Receita atualizada com sucesso!");
-            } else {
-                System.out.println("Receita não encontrada para atualização.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao atualizar receita: " + e.getMessage());
-        } finally {
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
 
-        return sucesso;
+        return novaReceita;
     }
 
-    public boolean excluirReceitaDAO(ReceitaVO receitaVO) {
+    public ArrayList<ReceitaVO> consultarTodasReceitasDAO(int idUsuario) {
         Connection conn = Banco.getConnection();
-        Statement stmt = Banco.getStatement(conn);
-
-        boolean sucesso = false;
-        String query = "DELETE FROM receita WHERE idreceita=" + receitaVO.getIdReceita();
-
-        try {
-            if (stmt.executeUpdate(query) > 0) {
-                sucesso = true;
-                System.out.println("Receita excluída com sucesso!");
-            } else {
-                System.out.println("Receita não encontrada para exclusão.");
-            }
-        } catch (SQLException e) {
-            System.out.println("Erro ao excluir receita: " + e.getMessage());
-        } finally {
-            Banco.closeStatement(stmt);
-            Banco.closeConnection(conn);
-        }
-
-        return sucesso;
-    }
-
-    public ArrayList<ReceitaVO> consultarTodasReceitasDAO() {
-        Connection conn = Banco.getConnection();
-        Statement stmt = Banco.getStatement(conn);
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
 
         ArrayList<ReceitaVO> listaReceitas = new ArrayList<>();
-        String query = "SELECT * FROM receita";
+        String query = "SELECT * FROM receita WHERE idusuario = ?";
 
         try {
-            rs = stmt.executeQuery(query);
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
+            rs = pstmt.executeQuery();
+
             while (rs.next()) {
                 ReceitaVO receita = new ReceitaVO();
                 receita.setIdReceita(rs.getInt("idreceita"));
                 receita.setIdUsuario(rs.getInt("idusuario"));
                 receita.setDescricao(rs.getString("descricao"));
                 receita.setValor(rs.getBigDecimal("valor"));
-                receita.setDataReceita(rs.getTimestamp("datareceita").toLocalDateTime());
+                receita.setDataReceita(rs.getObject("datareceita", LocalDateTime.class));
+
                 listaReceitas.add(receita);
             }
         } catch (SQLException e) {
             System.out.println("Erro ao consultar todas as receitas: " + e.getMessage());
         } finally {
             Banco.closeResultSet(rs);
-            Banco.closeStatement(stmt);
+            Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
 
         return listaReceitas;
     }
 
-    public ReceitaVO consultarReceitaDAO(ReceitaVO receitaVO) {
+    public ReceitaVO consultarReceitaDAO(int idReceita) {
         Connection conn = Banco.getConnection();
-        Statement stmt = Banco.getStatement(conn);
+        PreparedStatement pstmt = null;
         ResultSet rs = null;
-
         ReceitaVO receita = null;
-        String query = "SELECT * FROM receita WHERE idreceita=" + receitaVO.getIdReceita();
+
+        String query = "SELECT * FROM receita WHERE idreceita = ?";
 
         try {
-            rs = stmt.executeQuery(query);
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idReceita);
+            rs = pstmt.executeQuery();
+
             if (rs.next()) {
                 receita = new ReceitaVO();
                 receita.setIdReceita(rs.getInt("idreceita"));
                 receita.setIdUsuario(rs.getInt("idusuario"));
                 receita.setDescricao(rs.getString("descricao"));
                 receita.setValor(rs.getBigDecimal("valor"));
-                receita.setDataReceita(rs.getTimestamp("datareceita").toLocalDateTime());
+                receita.setDataReceita(rs.getObject("datareceita", LocalDateTime.class));
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao consultar receita: " + e.getMessage());
+            System.out.println("Erro ao consultar a receita: " + e.getMessage());
         } finally {
             Banco.closeResultSet(rs);
-            Banco.closeStatement(stmt);
+            Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
 
         return receita;
+    }
+
+    public boolean atualizarReceitaDAO(ReceitaVO receitaVO) {
+        Connection conn = Banco.getConnection();
+        PreparedStatement pstmt = null;
+        boolean atualizado = false;
+
+        String query = "UPDATE receita SET descricao = ?, valor = ?, datareceita = ? WHERE idreceita = ?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, receitaVO.getDescricao());
+            pstmt.setBigDecimal(2, receitaVO.getValor());
+            pstmt.setObject(3, receitaVO.getDataReceita());
+            pstmt.setInt(4, receitaVO.getIdReceita());
+
+            int affectedRows = pstmt.executeUpdate();
+            atualizado = affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar a receita: " + e.getMessage());
+        } finally {
+            Banco.closePreparedStatement(pstmt);
+            Banco.closeConnection(conn);
+        }
+
+        return atualizado;
+    }
+
+    public boolean excluirReceitaDAO(int idReceita) {
+        Connection conn = Banco.getConnection();
+        PreparedStatement pstmt = null;
+        boolean excluido = false;
+
+        String query = "DELETE FROM receita WHERE idreceita = ?";
+
+        try {
+            pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idReceita);
+
+            int affectedRows = pstmt.executeUpdate();
+            excluido = affectedRows > 0;
+        } catch (SQLException e) {
+            System.out.println("Erro ao excluir a receita: " + e.getMessage());
+        } finally {
+            Banco.closePreparedStatement(pstmt);
+            Banco.closeConnection(conn);
+        }
+
+        return excluido;
     }
 }
