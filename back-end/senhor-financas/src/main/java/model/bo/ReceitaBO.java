@@ -22,8 +22,10 @@ public class ReceitaBO {
         return receitaDAO.consultarReceitaDAO(idReceita);
     }
 
+    // Atualize o método atualizarReceitaBO
     public boolean atualizarReceitaBO(ReceitaVO receitaVO) {
         ReceitaDAO receitaDAO = new ReceitaDAO();
+        System.out.println("Tentando atualizar a receita com ID: " + receitaVO.getIdReceita());
         return receitaDAO.atualizarReceitaDAO(receitaVO);
     }
 

@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import model.bo.ReceitaBO;
 import model.vo.ReceitaVO;
 
@@ -47,9 +48,21 @@ public class ReceitaRest {
     @Path("/atualizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean atualizarReceitaController(ReceitaVO receitaVO) {
+    public Response atualizarReceitaController(ReceitaVO receitaVO) {
         ReceitaBO receitaBO = new ReceitaBO();
-        return receitaBO.atualizarReceitaBO(receitaVO);
+
+        try {
+            Boolean resultado = receitaBO.atualizarReceitaBO(receitaVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.serverError().entity("Erro ao atualizar a receita.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.serverError().entity("Erro ao atualizar a receita: " + e.getMessage()).build();
+        }
     }
 
     @DELETE
