@@ -1,9 +1,6 @@
 package model.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import model.vo.DespesaVO;
@@ -67,21 +64,20 @@ public class DespesaDAO {
         return listaDespesas;
     }
 
-    public DespesaVO consultarDespesaDAO(DespesaVO despesaVO) {
+    public DespesaVO consultarDespesaDAO(int idDespesa) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        DespesaVO despesa = null;
+        DespesaVO despesa = new DespesaVO();
 
         String query = "SELECT * FROM despesa WHERE iddespesa = ?";
 
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, despesaVO.getIdDespesa());
+            pstmt.setInt(1, idDespesa);
             rs = pstmt.executeQuery();
 
             if (rs.next()) {
-                despesa = new DespesaVO();
                 despesa.setIdDespesa(rs.getInt("iddespesa"));
                 despesa.setIdUsuario(rs.getInt("idusuario"));
                 despesa.setDescricao(rs.getString("descricao"));
@@ -100,9 +96,10 @@ public class DespesaDAO {
         return despesa;
     }
 
-    public void atualizarDespesaDAO(DespesaVO despesaVO) {
+    public boolean atualizarDespesaDAO(DespesaVO despesaVO) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
+        boolean atualizado = false;
 
         String query = "UPDATE despesa SET descricao = ?, valor = ?, datavencimento = ?, datapagamento = ? WHERE iddespesa = ?";
 
@@ -114,56 +111,38 @@ public class DespesaDAO {
             pstmt.setObject(4, despesaVO.getDataPagamento());
             pstmt.setInt(5, despesaVO.getIdDespesa());
 
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            atualizado = affectedRows > 0;
         } catch (SQLException e) {
             System.out.println("Erro ao atualizar a despesa: " + e.getMessage());
         } finally {
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
+
+        return atualizado;
     }
 
-    public void excluirDespesaDAO(DespesaVO despesaVO) {
+    public boolean excluirDespesaDAO(int idDespesa) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
+        boolean excluido = false;
 
         String query = "DELETE FROM despesa WHERE iddespesa = ?";
 
         try {
             pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, despesaVO.getIdDespesa());
+            pstmt.setInt(1, idDespesa);
 
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+            excluido = affectedRows > 0;
         } catch (SQLException e) {
             System.out.println("Erro ao excluir a despesa: " + e.getMessage());
         } finally {
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
-    }
 
-    public boolean verificarExistenciaDespesaDAO(DespesaVO despesaVO) {
-        Connection conn = Banco.getConnection();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean existe = false;
-
-        String query = "SELECT * FROM despesa WHERE iddespesa = ?";
-
-        try {
-            pstmt = conn.prepareStatement(query);
-            pstmt.setInt(1, despesaVO.getIdDespesa());
-            rs = pstmt.executeQuery();
-
-            existe = rs.next();
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar a existência da despesa: " + e.getMessage());
-        } finally {
-            Banco.closeResultSet(rs);
-            Banco.closePreparedStatement(pstmt);
-            Banco.closeConnection(conn);
-        }
-
-        return existe;
+        return excluido;
     }
 }
