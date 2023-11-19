@@ -125,7 +125,8 @@ public class ReceitaDAO {
             int affectedRows = pstmt.executeUpdate();
             atualizado = affectedRows > 0;
         } catch (SQLException e) {
-            System.out.println("Erro ao atualizar a receita: " + e.getMessage());
+            e.printStackTrace();
+            System.out.println("Erro ao atualizar a receita. Detalhes: " + e.getMessage());
         } finally {
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
