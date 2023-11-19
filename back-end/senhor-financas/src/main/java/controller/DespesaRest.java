@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import model.bo.DespesaBO;
 import model.vo.DespesaVO;
 
@@ -48,18 +49,41 @@ public class DespesaRest {
     @Path("/atualizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean atualizarDespesaController(DespesaVO despesaVO) {
+    public Response atualizarDespesaController(DespesaVO despesaVO) {
         DespesaBO despesaBO = new DespesaBO();
-        return despesaBO.atualizarDespesaBO(despesaVO);
+
+        try {
+            Boolean resultado = despesaBO.atualizarDespesaBO(despesaVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.serverError().entity("Erro ao atualizar a despesa.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.serverError().entity("Erro ao atualizar a despesa: " + e.getMessage()).build();
+        }
     }
 
     @DELETE
     @Path("/deletar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean excluirDespesaController(DespesaVO despesaVO) {
+    public Response excluirDespesaController(DespesaVO despesaVO) {
         DespesaBO despesaBO = new DespesaBO();
-        despesaBO.excluirDespesaBO(despesaVO);
-        return true;
+
+        try {
+            Boolean resultado = despesaBO.excluirDespesaBO(despesaVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir a despesa.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir a despesa: " + e.getMessage()).build();
+        }
     }
 }

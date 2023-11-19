@@ -11,6 +11,7 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import model.bo.UsuarioBO;
 import model.vo.UsuarioVO;
 
@@ -46,17 +47,41 @@ public class UsuarioRest {
     @Path("/atualizar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean atualizarUsuarioController(UsuarioVO usuarioVO) {
+    public Response atualizarUsuarioController(UsuarioVO usuarioVO) {
         UsuarioBO usuarioBO = new UsuarioBO();
-        return usuarioBO.atualizarUsuarioBO(usuarioVO);
+
+        try {
+            Boolean resultado = usuarioBO.atualizarUsuarioBO(usuarioVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.serverError().entity("Erro ao atualizar o usuário.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.serverError().entity("Erro ao atualizar o usuário: " + e.getMessage()).build();
+        }
     }
 
     @DELETE
     @Path("/deletar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean excluirUsuarioController(UsuarioVO usuarioVO) {
+    public Response excluirUsuarioController(UsuarioVO usuarioVO) {
         UsuarioBO usuarioBO = new UsuarioBO();
-        return usuarioBO.excluirUsuarioBO(usuarioVO);
+
+        try {
+            Boolean resultado = usuarioBO.excluirUsuarioBO(usuarioVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir o usuário.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir o usuário: " + e.getMessage()).build();
+        }
     }
 }

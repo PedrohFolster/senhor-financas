@@ -23,13 +23,18 @@ public class DespesaBO {
         return despesaDAO.consultarDespesaDAO(idDespesa);
     }
 
+    // Atualize o método atualizarDespesaBO
     public boolean atualizarDespesaBO(DespesaVO despesaVO) {
         DespesaDAO despesaDAO = new DespesaDAO();
+        System.out.println("Tentando atualizar a despesa com ID: " + despesaVO.getIdDespesa());
         return despesaDAO.atualizarDespesaDAO(despesaVO);
     }
 
+    // Atualize o método excluirDespesaBO
     public boolean excluirDespesaBO(DespesaVO despesaVO) {
         DespesaDAO despesaDAO = new DespesaDAO();
+        System.out.println("Tentando excluir a despesa com ID:" + despesaVO.getIdDespesa());
         return despesaDAO.excluirDespesaDAO(despesaVO.getIdDespesa());
     }
+
 }

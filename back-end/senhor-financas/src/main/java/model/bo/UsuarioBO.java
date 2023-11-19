@@ -21,13 +21,18 @@ public class UsuarioBO {
         return usuarioDAO.consultarUsuarioDAO(idUsuario);
     }
 
+    // Atualize o método atualizarUsuarioBO
     public boolean atualizarUsuarioBO(UsuarioVO usuarioVO) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
+        System.out.println("Tentando atualizar o usuário com ID: " + usuarioVO.getIdUsuario());
         return usuarioDAO.atualizarUsuarioDAO(usuarioVO);
     }
 
+    // Atualize o método excluirUsuarioBO
     public boolean excluirUsuarioBO(UsuarioVO usuarioVO) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
+        System.out.println("Tentando excluir o usuário com ID:" + usuarioVO.getIdUsuario());
         return usuarioDAO.excluirUsuarioDAO(usuarioVO.getIdUsuario());
     }
+
 }
