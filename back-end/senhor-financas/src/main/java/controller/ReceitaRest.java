@@ -69,8 +69,20 @@ public class ReceitaRest {
     @Path("/deletar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Boolean excluirReceitaController(ReceitaVO receitaVO) {
+    public Response excluirReceitaController(ReceitaVO receitaVO) {
         ReceitaBO receitaBO = new ReceitaBO();
-        return receitaBO.excluirReceitaBO(receitaVO);
+
+        try {
+            Boolean resultado = receitaBO.excluirReceitaBO(receitaVO);
+
+            if (resultado != null && resultado) {
+                return Response.ok().build();
+            } else {
+                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir a receita.").build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir a receita: " + e.getMessage()).build();
+        }
     }
 }

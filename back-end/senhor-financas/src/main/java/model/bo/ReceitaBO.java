@@ -31,6 +31,7 @@ public class ReceitaBO {
 
     public boolean excluirReceitaBO(ReceitaVO receitaVO) {
         ReceitaDAO receitaDAO = new ReceitaDAO();
+        System.out.println("Tentando excluir a receita com ID:" + receitaVO.getIdReceita());
         return receitaDAO.excluirReceitaDAO(receitaVO.getIdReceita());
     }
 }

@@ -150,6 +150,7 @@ public class ReceitaDAO {
             excluido = affectedRows > 0;
         } catch (SQLException e) {
             System.out.println("Erro ao excluir a receita: " + e.getMessage());
+            e.printStackTrace(); // Adicione esta linha para imprimir o rastreamento da pilha
         } finally {
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
