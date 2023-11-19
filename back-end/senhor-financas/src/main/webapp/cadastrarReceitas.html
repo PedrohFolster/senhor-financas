@@ -63,14 +63,39 @@
 
 
 <script>
+    function formatDateTime(date) {
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const formattedDate = `${year}-${month}-${day}T00:00`;
+        return formattedDate;
+    }
+
     function cadastrarReceita() {
-        const dataReceita = document.getElementById('dtreceita').value;
+        const dataReceitaInput = document.getElementById('dtreceita');
         const descricao = document.getElementById('descricao').value;
         const valor = parseFloat(document.getElementById('valor').value);
-        const idUsuario = 1;  // Defina o ID do usuário conforme necessário
+        const idUsuario = 1;
+
+        // Get the date value and format it as a datetime string
+        const dataReceita = new Date(dataReceitaInput.value);
+        console.log('Raw Date (Local Time):', dataReceita); // Log raw date for debugging
+
+        // Convert to UTC before formatting
+        const dataReceitaUTC = new Date(Date.UTC(
+            dataReceita.getUTCFullYear(),
+            dataReceita.getUTCMonth(),
+            dataReceita.getUTCDate(),
+            dataReceita.getUTCHours(),
+            dataReceita.getUTCMinutes(),
+            dataReceita.getUTCSeconds()
+        ));
+
+        const formattedDataReceita = formatDateTime(dataReceitaUTC);
+        console.log('Formatted Date (UTC):', formattedDataReceita); // Log formatted date for debugging
 
         const receita = {
-            dataReceita: dataReceita,
+            dataReceita: formattedDataReceita,
             descricao: descricao,
             valor: valor,
             idUsuario: 1
@@ -86,14 +111,15 @@
             .then(response => response.json())
             .then(data => {
                 console.log('Receita cadastrada com sucesso:', data);
-                // Lógica adicional se necessário
+                // Additional logic if necessary
             })
             .catch((error) => {
                 console.error('Erro ao cadastrar receita:', error);
-                // Lógica adicional em caso de erro
+                // Additional logic in case of an error
             });
     }
 </script>
+
 </body>
 
 </html>
