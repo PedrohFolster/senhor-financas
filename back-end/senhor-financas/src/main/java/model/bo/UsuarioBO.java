@@ -10,7 +10,9 @@ public class UsuarioBO {
     public UsuarioVO cadastrarUsuarioBO(UsuarioVO usuarioVO) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         if (usuarioDAO.verificarCadastroUsuarioBaseDadosDAO(usuarioVO)) {
-            System.out.println("\n Usuario já cadastrado na base de Dados.");
+            System.out.println("\nUsuario já cadastrado na base de Dados.");
+        } else {
+            usuarioVO = usuarioDAO.cadastrarUsuarioDAO(usuarioVO);
         }
         return usuarioVO;
     }

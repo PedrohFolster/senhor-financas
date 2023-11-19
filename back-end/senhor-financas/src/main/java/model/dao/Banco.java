@@ -10,19 +10,16 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
-
 public class Banco {
 
 	private static final String NAME_DATASOURCE = "SenacDS";
 
-
-	public static Connection getConnection(){
+	public static Connection getConnection() {
 		try {
 			Context initContext = new InitialContext();
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
 			DataSource ds = (DataSource) envContext.lookup(NAME_DATASOURCE);
-			Connection conn = ds.getConnection();
-			return conn;
+			return ds.getConnection();
 		} catch (Exception e) {
 			System.out.println("Erro ao obter a Connection.");
 			System.out.println("Erro: " + e.getMessage());
@@ -30,9 +27,9 @@ public class Banco {
 		}
 	}
 
-	public static void closeConnection(Connection conn){
+	public static void closeConnection(Connection conn) {
 		try {
-			if(conn != null){
+			if (conn != null && !conn.isClosed()) {
 				conn.close();
 			}
 		} catch (SQLException e) {
@@ -41,20 +38,21 @@ public class Banco {
 		}
 	}
 
-	public static Statement getStatement(Connection conn){
+	public static Statement getStatement(Connection conn) {
 		try {
-			Statement stmt = conn.createStatement();
-			return stmt;
+			if (conn != null && !conn.isClosed()) {
+				return conn.createStatement();
+			}
 		} catch (SQLException e) {
 			System.out.println("Erro ao obter o Statement.");
 			System.out.println("Erro: " + e.getMessage());
-			return null;
 		}
+		return null;
 	}
 
-	public static void closeStatement(Statement stmt){
+	public static void closeStatement(Statement stmt) {
 		try {
-			if(stmt != null){
+			if (stmt != null && !stmt.isClosed()) {
 				stmt.close();
 			}
 		} catch (SQLException e) {
@@ -63,32 +61,34 @@ public class Banco {
 		}
 	}
 
-	public static PreparedStatement getPreparedStatement(Connection conn, String sql){
+	public static PreparedStatement getPreparedStatement(Connection conn, String sql) {
 		try {
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			return stmt;
-		} catch (Exception e) {
+			if (conn != null && !conn.isClosed()) {
+				return conn.prepareStatement(sql);
+			}
+		} catch (SQLException e) {
 			System.out.println("Erro ao obter o PreparedStatement.");
 			System.out.println("Erro: " + e.getMessage());
-			return null;
 		}
+		return null;
 	}
 
-	public static PreparedStatement getPreparedStatementWithPk(Connection conn, String sql){
+	public static PreparedStatement getPreparedStatementWithPk(Connection conn, String sql) {
 		try {
-			PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			return stmt;
-		} catch (Exception e) {
+			if (conn != null && !conn.isClosed()) {
+				return conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			}
+		} catch (SQLException e) {
 			System.out.println("Erro ao obter o PreparedStatement.");
 			System.out.println("Erro: " + e.getMessage());
-			return null;
 		}
+		return null;
 	}
 
-	public static void closePreparedStatement(Statement stmt){
+	public static void closePreparedStatement(PreparedStatement pstmt) {
 		try {
-			if(stmt != null){
-				stmt.close();
+			if (pstmt != null && !pstmt.isClosed()) {
+				pstmt.close();
 			}
 		} catch (SQLException e) {
 			System.out.println("Problema no fechamento do PreparedStatement.");
@@ -96,9 +96,9 @@ public class Banco {
 		}
 	}
 
-	public static void closeResultSet(ResultSet result){
+	public static void closeResultSet(ResultSet result) {
 		try {
-			if(result != null){
+			if (result != null && !result.isClosed()) {
 				result.close();
 			}
 		} catch (SQLException e) {

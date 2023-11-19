@@ -1,16 +1,18 @@
 package model.vo;
 
+import java.time.LocalDateTime;
+
 public class UsuarioVO {
 
     private int idUsuario;
     private String nome;
     private String cpf;
     private String email;
-    private String datanascimento;
+    private LocalDateTime datanascimento;
     private String login;
     private String senha;
 
-    public UsuarioVO(int idUsuario, String nome, String cpf, String email, String datanascimento, String login, String senha) {
+    public UsuarioVO(int idUsuario, String nome, String cpf, String email, LocalDateTime datanascimento, String login, String senha) {
         super();
         this.idUsuario = idUsuario;
         this.nome = nome;
@@ -57,11 +59,11 @@ public class UsuarioVO {
         this.email = email;
     }
 
-    public String getDatanascimento() {
+    public LocalDateTime getDatanascimento() {
         return datanascimento;
     }
 
-    public void setDatanascimento(String datanascimento) {
+    public void setDatanascimento(LocalDateTime datanascimento) {
         this.datanascimento = datanascimento;
     }
 
