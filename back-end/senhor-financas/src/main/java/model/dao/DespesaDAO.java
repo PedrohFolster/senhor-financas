@@ -30,7 +30,7 @@ public class DespesaDAO {
         }
     }
 
-    public ArrayList<DespesaVO> consultarTodasDespesasDAO() {
+    public ArrayList<DespesaVO> consultarTodasDespesasDAO(int idUsuario) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;

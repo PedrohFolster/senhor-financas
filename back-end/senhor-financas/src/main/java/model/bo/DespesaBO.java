@@ -13,9 +13,9 @@ public class DespesaBO {
         despesaDAO.cadastrarDespesaDAO(despesaVO);
     }
 
-    public ArrayList<DespesaVO> consultarTodasDespesasBO() {
+    public ArrayList<DespesaVO> consultarTodasDespesasBO(int idUsuario) {
         DespesaDAO despesaDAO = new DespesaDAO();
-        return despesaDAO.consultarTodasDespesasDAO();
+        return despesaDAO.consultarTodasDespesasDAO(idUsuario);
     }
 
     public DespesaVO consultarDespesaBO(int idDespesa) {

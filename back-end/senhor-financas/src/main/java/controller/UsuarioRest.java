@@ -28,11 +28,11 @@ public class UsuarioRest {
     }
 
     @GET
-    @Path("/listar")
+    @Path("/listar/{idusuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<UsuarioVO> consultarTodosUsuariosController() {
+    public List<UsuarioVO> consultarTodosUsuariosController(@PathParam("idusuario") int idUsuario) {
         UsuarioBO usuarioBO = new UsuarioBO();
-        return usuarioBO.consultarTodosUsuariosBO();
+        return usuarioBO.consultarTodosUsuariosBO(idUsuario);
     }
 
     @GET

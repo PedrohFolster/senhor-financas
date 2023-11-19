@@ -11,9 +11,9 @@ public class UsuarioBO {
         return usuarioDAO.cadastrarUsuarioDAO(usuarioVO);
     }
 
-    public ArrayList<UsuarioVO> consultarTodosUsuariosBO() {
+    public ArrayList<UsuarioVO> consultarTodosUsuariosBO(int idUsuario) {
         UsuarioDAO usuarioDAO = new UsuarioDAO();
-        return usuarioDAO.consultarTodosUsuariosDAO();
+        return usuarioDAO.consultarTodosUsuariosDAO(idUsuario);
     }
 
     public UsuarioVO consultarUsuarioBO(int idUsuario) {

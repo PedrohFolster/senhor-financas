@@ -29,11 +29,11 @@ public class DespesaRest {
     }
 
     @GET
-    @Path("/listar")
+    @Path("/listar/{idusuario}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<DespesaVO> consultarTodasDespesasController() {
+    public List<DespesaVO> consultarTodasDespesasController(@PathParam("idusuario") int idUsuario) {
         DespesaBO despesaBO = new DespesaBO();
-        return despesaBO.consultarTodasDespesasBO();
+        return despesaBO.consultarTodasDespesasBO(idUsuario);
     }
 
     @GET

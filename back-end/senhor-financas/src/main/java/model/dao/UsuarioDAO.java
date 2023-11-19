@@ -44,7 +44,7 @@ public class UsuarioDAO {
         return novoUsuario;
     }
 
-    public ArrayList<UsuarioVO> consultarTodosUsuariosDAO() {
+    public ArrayList<UsuarioVO> consultarTodosUsuariosDAO(int idUsuario) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
