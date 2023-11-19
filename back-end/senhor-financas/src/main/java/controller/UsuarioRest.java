@@ -52,7 +52,7 @@ public class UsuarioRest {
     }
 
     @DELETE
-    @Path("/excluir")
+    @Path("/deletar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Boolean excluirUsuarioController(UsuarioVO usuarioVO) {

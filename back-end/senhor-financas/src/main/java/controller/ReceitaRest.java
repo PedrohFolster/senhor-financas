@@ -53,7 +53,7 @@ public class ReceitaRest {
     }
 
     @DELETE
-    @Path("/excluir")
+    @Path("/deletar")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Boolean excluirReceitaController(ReceitaVO receitaVO) {
