@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/relatorio.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
     <title>Senhor Finanças</title>
-    <link rel="stylesheet" href="./css/receitas.css">
 </head>
-
 <body>
     <header class="lateral">
         <div class="imagem">
@@ -26,100 +25,96 @@
             </ul>
         </section>
     </header>
-    <section class="principal">
-        <div class="titulo">
-            <h2>Receitas</h2>
-        </div>
-    </section>
-    <section class="tabela">
-        <form action="">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Descrição</th>
-                        <th>Data</th>
-                        <th>Valor</th>
-                        <th>Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>28</td>
-                        <td>salário</td>
-                        <td>01/05/2023</td>
-                        <td>R$ 9.000,00</td>
-                        <td>
-                            <div class="botoes-acoes">
-                                <button type="submit" class="botao-editar"
-                                    formaction="./editarDespesas.html">Editar</button>
-                                <button type="submit" class="botao-excluir"
-                                    formaction="./receitas.html">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>29</td>
-                        <td>consultorio</td>
-                        <td>10/06/2023</td>
-                        <td>R$ 6.000,00</td>
-                        <td>
-                            <div class="botoes-acoes">
-                                <button type="submit" class="botao-editar"
-                                    formaction="./editarDespesas.html">Editar</button>
-                                <button type="submit" class="botao-excluir"
-                                    formaction="./receitas.html">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>30</td>
-                        <td>aulas</td>
-                        <td>21/07/2023</td>
-                        <td>R$ 5.000,00</td>
-                        <td>
-                            <div class="botoes-acoes">
-                                <button type="submit" class="botao-editar"
-                                    formaction="./editarDespesas.html">Editar</button>
-                                <button type="submit" class="botao-excluir"
-                                    formaction="./receitas.html">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>31</td>
-                        <td>salário</td>
-                        <td>01/08/2023</td>
-                        <td>R$ 9.000,00</td>
-                        <td>
-                            <div class="botoes-acoes">
-                                <button type="submit" class="botao-editar"
-                                    formaction="./editarDespesas.html">Editar</button>
-                                <button type="submit" class="botao-excluir"
-                                    formaction="./receitas.html">Excluir</button>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    <tr>
-                        <th class="total-cell" colspan="5">Total - R$ 29.000,00</th>
-                    </tr>
-                </tfoot>
-            </table>
-        </form>
-    </section>
-    <section class="section-botao">
-        <form action="">
-            <div class="div-botao">
-                <button class="botao" type="submit">Buscar</button>
-            </div>
-            <div class="div-botao">
-                <button class="botao" type="submit">Limpar</button>
-            </div>
-            <div class="div-botao">
-                <button type="submit" class="botao" formaction="./cadastrarReceitas.html">Cadastrar</button>
-            </div>
-        </form>
-    </section>
+    <main class="principal">
+        <section class="titulo">
+            <h1>Relatórios</h1>
+        </section>
+        <section class="preencher">
+            <form action="">
+                <div class="campo-btn">
+                    <div class="campo-ano">
+                        <label for="ano">Ano:</label>
+                        <input class="input" type="number" name="ano" id="ano">
+                    </div>
+                    <div class="btn-gerar">
+                        <button class="botao" type="submit">Gerar</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+        <section class="relatorio">
+            <canvas id="meuGrafico" style="width: 100%; max-width: 1200px"></canvas>
+ 
+            <script>
+                const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+                const valoresReceita = [12000, 13000, 14000, 1100, 15000, 1500, 1400, 1600, 1200, 1300, 1100, 1000];
+                const valoresDespesa = [800, 900, 700, 850, 950, 1200, 1100, 1300, 1000, 1100, 900, 800];
+                const coresBarras = ["#ccffcc", "#ffcccc"]; // Verde claro e Vermelho claro
+         
+                new Chart("meuGrafico", {
+                    type: "bar",
+                    data: {
+                        labels: meses,
+                        datasets: [
+                            {
+                                label: "Total de Receitas",
+                                backgroundColor: coresBarras[0],
+                                data: valoresReceita,
+                            },
+                            {
+                                label: "Total de Despesas",
+                                backgroundColor: coresBarras[1],
+                                data: valoresDespesa,
+                            },
+                        ],
+                    },
+                    options: {
+                        legend: {
+                            display: true,
+                            labels: {
+                                fontColor: 'white', // Cor dos rótulos de legenda
+                            },
+                        },
+                        title: {
+                            display: true,
+                        },
+                        scales: {
+                            xAxes: [
+                                {
+                                    ticks: {
+                                        fontColor: "white", // Cor dos rótulos no eixo x
+                                    },
+                                    gridLines: {
+                                        color: "black", // Cor das linhas de grade no eixo x
+                                    },
+                                },
+                            ],
+                            yAxes: [
+                                {
+                                    ticks: {
+                                        fontColor: "white", // Cor dos rótulos no eixo y
+                                        callback: function(value, index, values) {
+                                            // Formatação para separador de milhares
+                                            return value.toLocaleString('pt-BR');
+                                        }
+                                    },
+                                    gridLines: {
+                                        color: "black", // Cor das linhas de grade no eixo y
+                                    },
+                                },
+                            ],
+                        },
+                        plugins: {
+                            datalabels: {
+                                color: 'white', // Cor do texto dentro das barras
+                                anchor: 'end',
+                                align: 'end',
+                            }
+                        },
+                    },
+                });
+            </script>
+        </section>
+    </main>
 </body>
+</html>
