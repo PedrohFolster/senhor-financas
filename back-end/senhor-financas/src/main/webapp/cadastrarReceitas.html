@@ -31,7 +31,7 @@
         <h2>Cadastro de Receitas</h2>
     </div>
 </section>
-<form onsubmit="event.preventDefault(); cadastrarReceita();">
+<form action="" onsubmit="event.preventDefault(); atualizarTabelaReceitas();">
     <section class="cadastro-receitas">
         <div class="div-input-receitas">
             <label for="descricao">Descricao:</label>
@@ -61,65 +61,8 @@
     <h3>Desenvolvido por PedroFolster</h3>
 </section>
 
-
-<script>
-    function formatDateTime(date) {
-        const year = date.getUTCFullYear();
-        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-        const day = String(date.getUTCDate()).padStart(2, '0');
-        const formattedDate = `${year}-${month}-${day}T00:00`;
-        return formattedDate;
-    }
-
-    function cadastrarReceita() {
-        const dataReceitaInput = document.getElementById('dtreceita');
-        const descricao = document.getElementById('descricao').value;
-        const valor = parseFloat(document.getElementById('valor').value);
-        const idUsuario = 1;
-
-        // Get the date value and format it as a datetime string
-        const dataReceita = new Date(dataReceitaInput.value);
-        console.log('Raw Date (Local Time):', dataReceita); // Log raw date for debugging
-
-        // Convert to UTC before formatting
-        const dataReceitaUTC = new Date(Date.UTC(
-            dataReceita.getUTCFullYear(),
-            dataReceita.getUTCMonth(),
-            dataReceita.getUTCDate(),
-            dataReceita.getUTCHours(),
-            dataReceita.getUTCMinutes(),
-            dataReceita.getUTCSeconds()
-        ));
-
-        const formattedDataReceita = formatDateTime(dataReceitaUTC);
-        console.log('Formatted Date (UTC):', formattedDataReceita); // Log formatted date for debugging
-
-        const receita = {
-            dataReceita: formattedDataReceita,
-            descricao: descricao,
-            valor: valor,
-            idUsuario: 1
-        };
-
-        fetch('http://localhost:8080/senhor_financas_war_exploded/rest/receita/cadastrar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(receita),
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log('Receita cadastrada com sucesso:', data);
-                // Additional logic if necessary
-            })
-            .catch((error) => {
-                console.error('Erro ao cadastrar receita:', error);
-                // Additional logic in case of an error
-            });
-    }
-</script>
-
+<!-- Inclua a referência para o arquivo JavaScript externo na nova pasta "js" -->
+<script src="./js/cadastrarReceita.js"></script>
 </body>
 
 </html>

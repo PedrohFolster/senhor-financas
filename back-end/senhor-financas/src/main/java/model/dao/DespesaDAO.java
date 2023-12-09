@@ -7,28 +7,42 @@ import model.vo.DespesaVO;
 
 public class DespesaDAO {
 
-    public void cadastrarDespesaDAO(DespesaVO despesaVO) {
+    public DespesaVO cadastrarDespesaDAO(DespesaVO despesaVO) {
         Connection conn = Banco.getConnection();
         PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        DespesaVO novaDespesa = null;
 
         String query = "INSERT INTO despesa (idusuario, descricao, valor, datavencimento, datapagamento) VALUES (?, ?, ?, ?, ?)";
 
         try {
-            pstmt = conn.prepareStatement(query);
+            pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             pstmt.setInt(1, despesaVO.getIdUsuario());
             pstmt.setString(2, despesaVO.getDescricao());
             pstmt.setBigDecimal(3, despesaVO.getValor());
             pstmt.setObject(4, despesaVO.getDataVencimento());
             pstmt.setObject(5, despesaVO.getDataPagamento());
 
-            pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
+
+            if (affectedRows > 0) {
+                rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                    int idDespesa = rs.getInt(1);
+                    novaDespesa = consultarDespesaDAO(idDespesa);
+                }
+            }
         } catch (SQLException e) {
             System.out.println("Erro ao cadastrar a despesa: " + e.getMessage());
         } finally {
+            Banco.closeResultSet(rs);
             Banco.closePreparedStatement(pstmt);
             Banco.closeConnection(conn);
         }
+
+        return novaDespesa;
     }
+
 
     public ArrayList<DespesaVO> consultarTodasDespesasDAO(int idUsuario) {
         Connection conn = Banco.getConnection();

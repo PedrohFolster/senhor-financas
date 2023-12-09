@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4aa8ce81-f900-475c-9de7-1e44806a448e" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/senhor-financas.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/senhor-financas.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -43,6 +42,8 @@
       <workItem from="1700427021131" duration="28000" />
       <workItem from="1700432720856" duration="10000" />
       <workItem from="1700714119845" duration="34000" />
+      <workItem from="1701314992869" duration="11000" />
+      <workItem from="1702089257870" duration="8000" />
     </task>
     <servers />
   </component>
