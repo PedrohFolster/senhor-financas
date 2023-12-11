@@ -84,4 +84,15 @@ public class UsuarioRest {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity("Erro ao excluir o usuário: " + e.getMessage()).build();
         }
     }
+
+    @POST
+    @Path("/logar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public UsuarioVO realizarLogin(UsuarioVO usuarioVO) {
+        UsuarioBO usuarioBO= new UsuarioBO();
+
+        return usuarioBO.realizarLoginBo(usuarioVO);
+    }
+
 }

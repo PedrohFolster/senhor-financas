@@ -35,4 +35,9 @@ public class UsuarioBO {
         return usuarioDAO.excluirUsuarioDAO(usuarioVO.getIdUsuario());
     }
 
+    public UsuarioVO realizarLoginBo(UsuarioVO usuarioVo) {
+        UsuarioDAO usuarioDAO = new UsuarioDAO();
+        return usuarioDAO.realizarLoginDao(usuarioVo);
+    }
+
 }

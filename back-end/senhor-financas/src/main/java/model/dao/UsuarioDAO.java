@@ -2,6 +2,7 @@ package model.dao;
 
 import java.sql.*;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import model.vo.UsuarioVO;
 
@@ -164,4 +165,40 @@ public class UsuarioDAO {
 
         return excluido;
     }
+
+    public UsuarioVO realizarLoginDao(UsuarioVO usuarioVo) {
+        Connection conn = Banco.getConnection();
+        Statement stmt = Banco.getStatement(conn);
+        ResultSet resultado = null;
+
+        String query = "SELECT idUsuario, nome, cpf, email, datanascimento FROM usuario"
+                + " WHERE login like '" + usuarioVo.getLogin() + "'" + " AND senha like '" +  usuarioVo.getSenha()+ "'";
+
+        try {
+            resultado = stmt.executeQuery(query);
+            if (resultado.next()) {
+                usuarioVo.setIdUsuario(Integer.parseInt(resultado.getString(1)));
+                usuarioVo.setNome(resultado.getString(2));
+                usuarioVo.setCpf(resultado.getString(3));
+                usuarioVo.setEmail(resultado.getString(4));
+
+                String dataNascimentoStr = resultado.getString(5);
+                if (dataNascimentoStr != null) {
+                    LocalDateTime dataNascimento = LocalDateTime.parse(dataNascimentoStr, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                    usuarioVo.setDatanascimento(dataNascimento);
+                } else {
+                    // Lógica para lidar com data de nascimento nula, se necessário
+                }
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro ao executar a query no método realizarLoginUsuarioDAO!");
+            System.out.println("Erro: " + erro.getMessage());
+        } finally {
+            Banco.closeStatement(stmt);
+            Banco.closeConnection(conn);
+        }
+        return usuarioVo;
+    }
+
+
 }

@@ -11,13 +11,25 @@ async function logarUsuario() {
     };
 
     try {
-        const resultado = await fetch('http://localhost:8080/senhor-financas/rest/usuario/logar', options);
+        const resultado = await fetch('http://localhost:8080/senhor_financas_war_exploded/rest/usuario/logar', options);
         const usuario = await resultado.json();
 
-        if (usuario.idUsuario != 0) {
+        if (usuario.idUsuario !== 0) {
             alert("Login realizado com Sucesso!");
+
+            // Armazene as informações do usuário na sessionStorage
             sessionStorage.setItem('usuario', JSON.stringify(usuario));
-            window.location.href="../modules/receita/principal_receita.html";
+
+            // Obtenha as informações completas do usuário usando o endpoint com base no ID
+            const idUsuarioLogado = usuario.idUsuario;
+            const infoUsuarioResponse = await fetch(`http://localhost:8080/senhor_financas_war_exploded/rest/usuario/pesquisar/${idUsuarioLogado}`);
+            const infoUsuario = await infoUsuarioResponse.json();
+
+            // Faça o que for necessário com as informações completas do usuário
+            console.log('Informações do usuário:', infoUsuario);
+
+            // Redirecione para a página principal
+            window.location.href="/senhor_financas_war_exploded/principal.html";
         } else {
             alert("Credenciais inválidas. Verifique seu login e senha!");
         }
@@ -26,5 +38,8 @@ async function logarUsuario() {
         alert("Houve um problema no processo de login!");
     }
 
-    form.reset();
+    // Verifica se form não é nulo antes de chamar reset
+    if (form) {
+        form.reset();
+    }
 }
