@@ -31,25 +31,24 @@
         <h2>Cadastro de Receitas</h2>
     </div>
 </section>
-<form action="">
+<form onsubmit="event.preventDefault(); atualizarReceita();">
     <section class="cadastro-receitas">
         <div class="div-input-receitas">
             <label for="descricao">Descricao:</label>
             <input class="input-receitas" type="text" name="descricao" id="descricao" required>
         </div>
         <div class="div-input-receitas">
-            <label for="descricao">Data da Receita:</label>
+            <label for="dtreceita">Data da Receita:</label>
             <input class="input-receitas" type="date" name="dtreceita" id="dtreceita" required>
         </div>
         <div class="div-input-receitas">
-            <label for="descricao">Valor:</label>
+            <label for="valor">Valor:</label>
             <input class="input-receitas" type="number" name="valor" id="valor" required>
         </div>
     </section>
     <section class="botao-cadastrar-receitas">
         <div class="receitas-cadastrar">
-            <div class="input-cadastrar-receitas">
-            </div>
+            <div class="input-cadastrar-receitas"></div>
             <div class="cadastro-receitas">
                 <button class="cadastrar-botao" type="button" onclick="atualizarReceita()">Cadastrar</button>
             </div>
@@ -65,7 +64,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const urlParams = new URLSearchParams(window.location.search);
         const descricao = urlParams.get('descricao');
-        const dataReceita = urlParams.get('dtreceita');
+        const dataReceita = urlParams.get('dataReceita');
         const valor = urlParams.get('valor');
 
         const descricaoInput = document.getElementById('descricao');
@@ -76,21 +75,13 @@
             descricaoInput.value = descricao || '';
             valorInput.value = valor || '';
 
-            // Verifica se há uma data antes de tentar preencher o campo
+            // Verifica se há uma data de receita antes de tentar preencher o campo
             if (dataReceita) {
-                const formattedData = formatarData(dataReceita);
-                dtreceitaInput.value = formattedData || '';
+                const formattedDataReceita = formatarData(dataReceita);
+                dtreceitaInput.value = formattedDataReceita || '';
             }
         }
     });
-
-    function formatarData(data) {
-        const date = new Date(data);
-        const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0');
-        const day = String(date.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    }
 
     async function atualizarReceita() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -103,7 +94,7 @@
         }
 
         const descricao = document.getElementById('descricao').value;
-        const dataReceitaInput = document.getElementById('dtreceita');
+        const dtreceitaInput = document.getElementById('dtreceita');
         const valor = document.getElementById('valor').value;
 
         const idUsuario = 1; // O ID do usuário associado à receita
@@ -119,7 +110,7 @@
                 body: JSON.stringify({
                     idReceita,
                     descricao,
-                    dataReceita: formatarData(dataReceitaInput.value),
+                    dataReceita: formatarDataParaJSON(dtreceitaInput.value),
                     valor,
                     idUsuario,
                 }),
@@ -135,8 +126,34 @@
             console.error('Erro ao atualizar a receita', error);
         }
     }
-</script>
 
+    function formatarData(data) {
+        if (!data) {
+            return ''; // Retorna uma string vazia se a data for nula ou indefinida
+        }
+
+        const date = new Date(data);
+        if (isNaN(date.getTime())) {
+            return ''; // Retorna uma string vazia se a data não for válida
+        }
+
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    function formatarDataParaJSON(data) {
+        const date = new Date(data);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const hours = String(date.getHours()).padStart(2, '0');
+        const minutes = String(date.getMinutes()).padStart(2, '0');
+        return `${year}-${month}-${day}T${hours}:${minutes}`;
+    }
+
+</script>
 </body>
 
 </html>

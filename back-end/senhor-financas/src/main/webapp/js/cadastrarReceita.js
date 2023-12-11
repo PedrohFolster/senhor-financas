@@ -1,21 +1,70 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const formReceitas = document.getElementById('formCadastrarReceita');
+    const formReceitas = document.getElementById('formReceitas');
 
     if (formReceitas) {
-        formReceitas.addEventListener('submit', function (event) {
+        formReceitas.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            // Desabilitar o botão antes de enviar a requisição
             const cadastrarBotao = document.getElementById('cadastrarBotao');
-            cadastrarBotao.disabled = true;
 
-            cadastrarNovaReceita()
-                .finally(() => {
-                    // Reabilitar o botão após a conclusão da requisição
+            if (cadastrarBotao) {
+                cadastrarBotao.disabled = true;
+
+                try {
+                    await cadastrarNovaReceita();
+                } finally {
                     cadastrarBotao.disabled = false;
-                });
+                }
+            }
         });
     }
+
+    const buscarBotao = document.getElementById('buscarBotao');
+    if (buscarBotao) {
+        buscarBotao.addEventListener('click', function (event) {
+            event.preventDefault();
+            atualizarTabelaReceitas();
+        });
+    }
+
+    // Adiciona um evento de clique ao botão "Cadastrar"
+    const cadastrarBotao = document.getElementById('cadastrarBotao');
+    if (cadastrarBotao) {
+        cadastrarBotao.addEventListener('click', function (event) {
+            event.preventDefault(); // Evita o comportamento padrão do formulário
+            cadastrarNovaReceita(); // Chama a função para cadastrar a receita
+        });
+    }
+
+    // Adiciona um evento de clique aos botões de editar
+    const botoesEditar = document.querySelectorAll('.botao-editar');
+    botoesEditar.forEach((botao) => {
+        botao.addEventListener('click', function (event) {
+            event.preventDefault();
+
+            // Encontrar a linha da tabela
+            const linha = event.target.closest('tr');
+
+            // Certifique-se de que a linha existe
+            if (linha) {
+                // Encontrar o elemento com o ID na primeira célula da linha
+                const idReceitaElement = linha.querySelector('td[data-id]');
+
+                // Certifique-se de que o elemento com o ID existe
+                if (idReceitaElement) {
+                    const idReceita = idReceitaElement.dataset.id;
+
+                    // Redirecionar para a página de edição com o ID
+                    console.log('ID da Receita:', idReceita);
+                    window.location.href = `./editarReceita.html?id=${idReceita}`;
+                } else {
+                    console.error('Elemento de ID não encontrado na linha da tabela.');
+                }
+            } else {
+                console.error('Linha da tabela não encontrada.');
+            }
+        });
+    });
 
     atualizarTabelaReceitas();
 });
@@ -173,4 +222,18 @@ function cadastrarNovaReceita() {
         .catch((error) => {
             console.error('Erro ao cadastrar a nova receita:', error);
         });
+}
+
+async function editarReceita(receita) {
+    if (!receita || !receita.idReceita) {
+        console.error('ID da receita não encontrado');
+        return;
+    }
+
+    const idReceita = receita.idReceita;
+    const descricao = receita.descricao;
+    const dataReceita = receita.dataReceita;
+    const valor = receita.valor;
+
+    window.location.href = `./editarReceitas.html?id=${idReceita}&descricao=${descricao}&dataReceita=${dataReceita}&valor=${valor}`;
 }

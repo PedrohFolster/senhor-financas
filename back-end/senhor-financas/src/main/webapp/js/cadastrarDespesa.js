@@ -5,15 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
         formDespesas.addEventListener('submit', async function (event) {
             event.preventDefault();
 
-            const cadastrarBotaoDespesa = document.getElementById('cadastrarBotaoDespesa');
+            const cadastrarBotao = document.getElementById('cadastrarBotao');
 
             if (cadastrarBotao) {
-                cadastrarBotaoDespesa.disabled = true;
+                cadastrarBotao.disabled = true;
 
                 try {
                     await cadastrarNovaDespesa();
                 } finally {
-                    cadastrarBotaoDespesa.disabled = false;
+                    cadastrarBotao.disabled = false;
                 }
             }
         });
@@ -28,9 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Adiciona um evento de clique ao botão "Cadastrar"
-    const cadastrarBotaoDespesa = document.getElementById('cadastrarBotao');
-    if (cadastrarBotaoDespesa) {
-        cadastrarBotaoDespesa.addEventListener('click', function (event) {
+    const cadastrarBotao = document.getElementById('cadastrarBotao');
+    if (cadastrarBotao) {
+        cadastrarBotao.addEventListener('click', function (event) {
             event.preventDefault(); // Evita o comportamento padrão do formulário
             cadastrarNovaDespesa(); // Chama a função para cadastrar a despesa
         });
