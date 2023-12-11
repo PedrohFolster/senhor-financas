@@ -65,8 +65,92 @@
     <h3>Desenvolvido por PedroFolster</h3>
 </section>
 
-<script src="js/editarReceita.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const descricao = urlParams.get('descricao');
+        const dataVencimento = urlParams.get('dtvencimento');
+        const dataPagamento = urlParams.get('dtpagamento');
+        const valor = urlParams.get('valor');
 
+        const descricaoInput = document.getElementById('descricao');
+        const dtvencimentoInput = document.getElementById('dtvencimento');
+        const dtpagamentoInput = document.getElementById('dtpagamento');
+        const valorInput = document.getElementById('valor');
+
+        if (descricaoInput && dtvencimentoInput && dtpagamentoInput && valorInput) {
+            descricaoInput.value = descricao || '';
+            valorInput.value = valor || '';
+
+            // Verifica se há uma data de vencimento antes de tentar preencher o campo
+            if (dataVencimento) {
+                const formattedDataVencimento = formatarData(dataVencimento);
+                dtvencimentoInput.value = formattedDataVencimento || '';
+            }
+
+            // Verifica se há uma data de pagamento antes de tentar preencher o campo
+            if (dataPagamento) {
+                const formattedDataPagamento = formatarData(dataPagamento);
+                dtpagamentoInput.value = formattedDataPagamento || '';
+            }
+        }
+    });
+
+    function formatarData(data) {
+        const date = new Date(data);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    }
+
+    async function atualizarDespesa() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const idDespesa = urlParams.get('id');
+
+        // Verifica se o ID é maior que 0
+        if (!idDespesa || parseInt(idDespesa) <= 0) {
+            console.error('ID de despesa inválido');
+            return;
+        }
+
+        const descricao = document.getElementById('descricao').value;
+        const dataVencimentoInput = document.getElementById('dtvencimento');
+        const dataPagamentoInput = document.getElementById('dtpagamento');
+        const valor = document.getElementById('valor').value;
+
+        const idUsuario = 1; // O ID do usuário associado à despesa
+
+        const url = `http://localhost:8080/senhor_financas_war_exploded/rest/despesa/atualizar`;
+
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    idDespesa,
+                    descricao,
+                    dataVencimento: formatarData(dataVencimentoInput.value),
+                    dataPagamento: formatarData(dataPagamentoInput.value),
+                    valor,
+                    idUsuario,
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}`);
+            }
+
+            console.log('Despesa atualizada com sucesso');
+            // Adicione aqui qualquer lógica adicional após a atualização bem-sucedida
+        } catch (error) {
+            console.error('Erro ao atualizar a despesa', error);
+        }
+    }
+</script>
 </body>
 
 </html>
+

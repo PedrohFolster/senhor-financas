@@ -1,23 +1,24 @@
-// editarDespesa.js
-document.addEventListener("DOMContentLoaded", function () {
-    const botoesEditar = document.querySelectorAll(".botao-editar");
+document.addEventListener('DOMContentLoaded', function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    const descricao = urlParams.get('descricao');
+    const dataReceita = urlParams.get('dataReceita');
+    const valor = urlParams.get('valor');
 
-    botoesEditar.forEach(function (botao) {
-        botao.addEventListener("click", function (event) {
-            event.preventDefault();
+    const descricaoInput = document.getElementById('descricao');
+    const dtreceitaInput = document.getElementById('dtreceita');
+    const valorInput = document.getElementById('valor');
 
-            // Captura a linha da tabela
-            const linha = event.target.closest("tr");
-
-            // Obtém os dados da linha
-            const idDespesa = linha.querySelector("td:first-child").innerText;
-            const descricao = linha.querySelector("td:nth-child(2)").innerText;
-            const dataVencimento = linha.querySelector("td:nth-child(3)").innerText;
-            const dataPagamento = linha.querySelector("td:nth-child(4)").innerText;
-            const valor = linha.querySelector("td:nth-child(5)").innerText;
-
-            // Redireciona para a página de edição com os parâmetros na URL
-            window.location.href = `./editarDespesas.html?id=${idDespesa}&descricao=${descricao}&dataVencimento=${dataVencimento}&dataPagamento=${dataPagamento}&valor=${valor}`;
-        });
-    });
+    if (descricaoInput && dtreceitaInput && valorInput) {
+        descricaoInput.value = descricao || '';
+        dtreceitaInput.value = formatarDataInput(dataReceita) || '';
+        valorInput.value = valor || '';
+    }
 });
+
+function formatarDataInput(data) {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+}

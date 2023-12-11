@@ -31,17 +31,17 @@ body {
 
 
 /* Estilo da seção 'inicio' */
-.inicio {
+.titulo {
     text-align: center;
     padding: 20px;
 }
 
-.inicio h1 {
+.titulo h1 {
     font-size: 24px;
     margin-top: 50px; /* Espaço entre o topo e o h1 */
 }
 
-.inicio h1 {
+.titulo h1 {
     font-family: "Lato";
     color: var(--fonte-titulo);
     text-align: center;
@@ -49,7 +49,7 @@ body {
     padding-top: 6vh;
 }
 
-.inicio h4 {
+.titulo h4 {
     font-family: "Kalam";
     color: var(--fonte-texto);
     text-align: center;
@@ -88,7 +88,7 @@ label {
     text-align: center; /* Centraliza os botões horizontalmente */
 }
 
-.btn-entrar {
+.botao-entrar {
     width: 20rem;
     display: inline-block;
     padding: 5px 20px;
@@ -104,11 +104,11 @@ label {
     border: 2px solid var(--cor-preto);
 }
 
-.btn-entrar:hover {
+.botao-entrar:hover {
     background-color: var(--cor-secundaria);
 }
 
-.btn-criarconta {
+.btn-criar-conta {
     display: block;
     color: #fff;
     text-decoration: none;
@@ -116,12 +116,12 @@ label {
 }
 
 /* Estilo da seção 'desenvolvido' */
-.desenvolvido {
+.desenvolvedor {
     text-align: center;
     padding-top: 250px;
 }
 
-.desenvolvido h3 {
+.desenvolvedor h3 {
     font-size: 14px;
     color: #666;
     margin-top: 20px; /* Espaço entre o último botão e o h3 */
