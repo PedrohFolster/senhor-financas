@@ -42,10 +42,27 @@ document.addEventListener('DOMContentLoaded', () => {
         botao.addEventListener('click', function (event) {
             event.preventDefault();
 
+            // Encontrar a linha da tabela
             const linha = event.target.closest('tr');
-            const idDespesa = linha.querySelector('td:first-child').innerText;
 
-            window.location.href = `./editarDespesas.html?id=${idDespesa}`;
+            // Certifique-se de que a linha existe
+            if (linha) {
+                // Encontrar o elemento com o ID na primeira célula da linha
+                const idDespesaElement = linha.querySelector('td[data-id]');
+
+                // Certifique-se de que o elemento com o ID existe
+                if (idDespesaElement) {
+                    const idDespesa = idDespesaElement.dataset.id;
+
+                    // Redirecionar para a página de edição com o ID
+                    console.log('ID da Despesa:', idDespesa);
+                    window.location.href = `./editarDespesa.html?id=${idDespesa}`;
+                } else {
+                    console.error('Elemento de ID não encontrado na linha da tabela.');
+                }
+            } else {
+                console.error('Linha da tabela não encontrada.');
+            }
         });
     });
 
@@ -61,7 +78,17 @@ async function atualizarTabelaDespesas() {
     }
 
     try {
-        const response = await fetch('http://localhost:8080/senhor_financas_war_exploded/rest/despesa/listar/1');
+        // Recupera o ID do usuário logado da sessionStorage
+        const idUsuarioLogado = parseInt(sessionStorage.getItem('idUsuarioLogado'), 10);
+
+        if (isNaN(idUsuarioLogado)) {
+            console.error('ID do usuário logado não encontrado ou inválido.');
+            return;
+        }
+
+        const response = await fetch(
+            `http://localhost:8080/senhor_financas_war_exploded/rest/despesa/listar/${idUsuarioLogado}`
+        );
 
         if (!response.ok) {
             throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}`);
@@ -69,6 +96,7 @@ async function atualizarTabelaDespesas() {
 
         const data = await response.json();
 
+        // Limpar o conteúdo apenas se houver dados
         if (data.length > 0) {
             tabelaDespesasBody.innerHTML = '';
 
@@ -114,6 +142,16 @@ async function atualizarTabelaDespesas() {
 }
 
 function formatarData(data) {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
+
+function formatarDataParaJSON(data) {
     const date = new Date(data);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -173,12 +211,29 @@ async function cadastrarNovaDespesa() {
         return;
     }
 
+    // Verifique se os valores dos campos de data são nulos ou vazios
+    const dtvencimentoValue = dtvencimentoInput.value.trim();
+    const dtpagamentoValue = dtpagamentoInput.value.trim();
+
+    if (!dtvencimentoValue || !dtpagamentoValue) {
+        console.error('Erro: Os campos de data não podem estar vazios.');
+        return;
+    }
+
+    // Recupera o ID do usuário logado da sessionStorage
+    const idUsuarioLogado = parseInt(sessionStorage.getItem('idUsuarioLogado'), 10);
+
+    if (isNaN(idUsuarioLogado)) {
+        console.error('ID do usuário logado não encontrado ou inválido.');
+        return;
+    }
+
     const novaDespesa = {
         descricao: descricaoInput.value,
         valor: parseFloat(valorInput.value),
-        dtvencimento: dtvencimentoInput.value,
-        dtpagamento: dtpagamentoInput.value,
-        idUsuario: 1
+        dtvencimento: formatarDataParaJSON(dtvencimentoValue),
+        dtpagamento: formatarDataParaJSON(dtpagamentoValue),
+        idUsuario: idUsuarioLogado
     };
 
     try {

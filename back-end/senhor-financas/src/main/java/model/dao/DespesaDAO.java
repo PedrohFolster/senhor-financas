@@ -50,10 +50,11 @@ public class DespesaDAO {
         ResultSet rs = null;
 
         ArrayList<DespesaVO> listaDespesas = new ArrayList<>();
-        String query = "SELECT * FROM despesa";
+        String query = "SELECT * FROM despesa WHERE idusuario = ?";
 
         try {
             pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, idUsuario);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {

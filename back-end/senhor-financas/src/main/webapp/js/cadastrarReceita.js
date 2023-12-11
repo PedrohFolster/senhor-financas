@@ -78,8 +78,16 @@ async function atualizarTabelaReceitas() {
     }
 
     try {
+        // Recupera o ID do usuário logado da sessionStorage
+        const idUsuarioLogado = parseInt(sessionStorage.getItem('idUsuarioLogado'), 10);
+
+        if (isNaN(idUsuarioLogado)) {
+            console.error('ID do usuário logado não encontrado ou inválido.');
+            return;
+        }
+
         const response = await fetch(
-            'http://localhost:8080/senhor_financas_war_exploded/rest/receita/listar/1'
+            `http://localhost:8080/senhor_financas_war_exploded/rest/receita/listar/${idUsuarioLogado}`
         );
 
         if (!response.ok) {
@@ -160,7 +168,7 @@ async function excluirReceita(receita) {
 
     let options = {
         method: 'DELETE',
-        headers: { 'Content-type': 'application/json' },
+        headers: {'Content-type': 'application/json'},
     };
 
     try {
@@ -168,7 +176,7 @@ async function excluirReceita(receita) {
             `http://localhost:8080/senhor_financas_war_exploded/rest/receita/deletar`,
             {
                 ...options,
-                body: JSON.stringify({ idReceita: idReceita }),
+                body: JSON.stringify({idReceita: idReceita}),
             }
         );
 
@@ -195,11 +203,19 @@ function cadastrarNovaReceita() {
         return;
     }
 
+    // Recupera o ID do usuário logado da sessionStorage
+    const idUsuarioLogado = parseInt(sessionStorage.getItem('idUsuarioLogado'), 10);
+
+    if (isNaN(idUsuarioLogado)) {
+        console.error('ID do usuário logado não encontrado ou inválido.');
+        return;
+    }
+
     const novaReceita = {
         descricao: descricaoInput.value,
         dataReceita: new Date(dtreceitaInput.value).toISOString(),
         valor: parseFloat(valorInput.value),
-        idUsuario: 1
+        idUsuario: idUsuarioLogado
     };
 
     console.log('Nova receita:', novaReceita);
@@ -237,3 +253,4 @@ async function editarReceita(receita) {
 
     window.location.href = `./editarReceitas.html?id=${idReceita}&descricao=${descricao}&dataReceita=${dataReceita}&valor=${valor}`;
 }
+

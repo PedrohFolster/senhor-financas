@@ -17,7 +17,7 @@ async function cadastrarPessoa() {
 
     let options = {
         method: "POST",
-        headers: { "Content-type": "application/json" },
+        headers: {"Content-type": "application/json"},
         body: JSON.stringify({
             id: 0,
             nome: document.querySelector('#nome').value,
