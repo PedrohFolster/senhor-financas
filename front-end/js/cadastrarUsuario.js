@@ -1,4 +1,5 @@
 async function cadastrarPessoa() {
+    let form = document.getElementById('cadastroForm');
 
     // Função para formatar a data no formato desejado
     function formatarDataParaJSON(data) {
@@ -12,7 +13,7 @@ async function cadastrarPessoa() {
     }
 
     // Obtém a data do campo e a formata corretamente
-    const datanascimento = formatarDataParaJSON(document.querySelector('#dtnascimento').value);
+    const dataNascimento = formatarDataParaJSON(document.querySelector('#dtnascimento').value);
 
     let options = {
         method: "POST",
@@ -22,7 +23,7 @@ async function cadastrarPessoa() {
             nome: document.querySelector('#nome').value,
             cpf: document.querySelector('#cpf').value,
             email: document.querySelector('#email').value,
-            datanascimento: datanascimento,
+            dataNascimento: dataNascimento, // Utiliza a data formatada corretamente
             login: document.querySelector('#login').value,
             senha: document.querySelector('#senha').value
         })
@@ -47,6 +48,8 @@ async function cadastrarPessoa() {
         } else {
             alert("Houve um problema no cadastro da pessoa.");
         }
+
+        form.reset();
     } catch (error) {
         console.error("Erro durante a requisição:", error.message);
         alert("Erro durante a requisição. Consulte o console para obter mais detalhes.");

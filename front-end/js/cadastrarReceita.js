@@ -69,34 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
     atualizarTabelaReceitas();
 });
 
-function limparTabela() {
-    // Tenta encontrar o corpo da tabela
-    const tbody = document.getElementById('tbodyReceitas');
-
-    // Certifica-se de que o corpo da tabela foi encontrado
-    if (tbody) {
-        // Limpa o conteúdo do corpo da tabela
-        tbody.innerHTML = '';
-
-        // Zera o valor total de receitas
-        const totalReceitasElement = document.getElementById('totalReceitas');
-        if (totalReceitasElement) {
-            totalReceitasElement.textContent = '0.00';
-        } else {
-            console.error('Elemento de totalReceitas não encontrado.');
-        }
-    } else {
-        console.error('Corpo da tabela não encontrado.');
-    }
-}
-
-
 async function atualizarTabelaReceitas() {
     const tabelaReceitasBody = document.getElementById('tbodyReceitas');
-    const totalReceitasElement = document.getElementById('totalReceitas');
 
-    if (!tabelaReceitasBody || !totalReceitasElement) {
-        console.error('Elemento com ID "tbodyReceitas" ou "totalReceitas" não encontrado.');
+    if (!tabelaReceitasBody) {
+        console.error('Elemento com ID "tbodyReceitas" não encontrado.');
         return;
     }
 
@@ -118,7 +95,6 @@ async function atualizarTabelaReceitas() {
         }
 
         const data = await response.json();
-        let totalReceitas = 0; // Variável para armazenar o total
 
         // Limpar o conteúdo apenas se houver dados
         if (data.length > 0) {
@@ -137,9 +113,6 @@ async function atualizarTabelaReceitas() {
                 td_descricao.innerText = receita.descricao;
                 td_data.innerText = formatarData(receita.dataReceita);
                 td_valor.innerText = formatarValor(receita.valor);
-
-                // Adiciona o valor ao total
-                totalReceitas += receita.valor;
 
                 let botoesAcoes = document.createElement('div');
                 botoesAcoes.className = 'botoes-acoes';
@@ -160,12 +133,6 @@ async function atualizarTabelaReceitas() {
 
                 td_acoes.appendChild(botoesAcoes);
             });
-
-            // Atualiza o texto do total
-            totalReceitasElement.innerText = formatarValor(totalReceitas);
-        } else {
-            // Caso não haja dados, limpe o total
-            totalReceitasElement.innerText = formatarValor(0);
         }
     } catch (error) {
         console.error('Erro ao obter a lista de receitas', error);
@@ -184,6 +151,11 @@ function formatarData(data) {
 
 function formatarValor(valor) {
     return valor.toFixed(2);
+}
+
+function editarReceita(receita) {
+    console.log('Editar receita:', receita);
+    // Implemente a lógica de edição da receita
 }
 
 async function excluirReceita(receita) {
@@ -215,23 +187,9 @@ async function excluirReceita(receita) {
         }
 
         console.log('Receita excluída com sucesso');
-        await atualizarTabelaReceitas();
-
-        // Mostrar mensagem de sucesso com alert
-        mostrarMensagem('Receita excluída com sucesso', 'success');
+        atualizarTabelaReceitas();
     } catch (error) {
         console.error('Erro ao excluir a receita', error);
-
-        // Mostrar mensagem de erro com alert
-        mostrarMensagem('Erro ao excluir a receita', 'error');
-    }
-}
-
-function mostrarMensagem(mensagem, tipo) {
-    if (tipo === 'success') {
-        alert(`SUCESSO: ${mensagem}`);
-    } else {
-        alert(`ERRO: ${mensagem}`);
     }
 }
 
@@ -262,7 +220,7 @@ function cadastrarNovaReceita() {
 
     console.log('Nova receita:', novaReceita);
 
-    fetch('http://localhost:8080/senhor_financas_war_exploded/rest/receita/cadastrar', {
+    return fetch('http://localhost:8080/senhor_financas_war_exploded/rest/receita/cadastrar', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -273,33 +231,14 @@ function cadastrarNovaReceita() {
             if (!response.ok) {
                 throw new Error(`Erro na resposta do servidor: ${response.status} ${response.statusText}`);
             }
-
             const data = await response.json();
             console.log('Nova receita cadastrada com sucesso:', data);
-
-            // Mostra mensagem de sucesso
-            mostrarMensagem('Receita cadastrada com sucesso', 'success');
-
-            // Redireciona para a página de receitas após um breve intervalo
-            window.location.href = './receitas.html';
-
+            atualizarTabelaReceitas();
         })
         .catch((error) => {
             console.error('Erro ao cadastrar a nova receita:', error);
-
-            // Mostra mensagem de erro
-            mostrarMensagem('Erro ao cadastrar a receita', 'error');
         });
 }
-
-function mostrarMensagem(mensagem, tipo) {
-    if (tipo === 'success') {
-        alert(`SUCESSO: ${mensagem}`);
-    } else {
-        alert(`ERRO: ${mensagem}`);
-    }
-}
-
 
 async function editarReceita(receita) {
     if (!receita || !receita.idReceita) {
@@ -314,3 +253,4 @@ async function editarReceita(receita) {
 
     window.location.href = `./editarReceitas.html?id=${idReceita}&descricao=${descricao}&dataReceita=${dataReceita}&valor=${valor}`;
 }
+

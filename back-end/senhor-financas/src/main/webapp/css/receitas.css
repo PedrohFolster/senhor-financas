@@ -70,9 +70,8 @@ hr {
 }
 
 .links a {
-    color: var(--cor-fonte-branco);
-    text-decoration: none;
     color: var(--cor-fonte);
+    text-decoration: none;
 }
 
 .btn {
@@ -81,7 +80,7 @@ hr {
 }
 
 .btn:hover {
-    color: var(--cor-fonte-branco);
+    color: var(--cor-fonte);
     background-color: var(--cor-secundaria);
 }
 

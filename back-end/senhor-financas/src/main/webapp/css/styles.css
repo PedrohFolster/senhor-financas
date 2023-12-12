@@ -24,8 +24,8 @@ html, body {
 
 body {
     background: var(--cor-fundo);
-    color: var(--cor-fonte);
     font-family: var(--fonte-texto);
+    color: var(--cor-fonte);
 }
 
 
@@ -88,7 +88,7 @@ label {
     text-align: center; /* Centraliza os botões horizontalmente */
 }
 
-.botao-entrar {
+.botao {
     width: 20rem;
     display: inline-block;
     padding: 5px 20px;
@@ -104,7 +104,7 @@ label {
     border: 2px solid var(--cor-preto);
 }
 
-.botao-entrar:hover {
+.botao:hover {
     background-color: var(--cor-secundaria);
 }
 
@@ -116,13 +116,13 @@ label {
 }
 
 /* Estilo da seção 'desenvolvido' */
-.desenvolvedor {
+.desenvolvido {
     text-align: center;
-    padding-top: 250px;
+    padding-top: 200px;
 }
 
-.desenvolvedor h3 {
+.desenvolvido h3 {
     font-size: 14px;
     color: #666;
-    margin-top: 20px; /* Espaço entre o último botão e o h3 */
+    margin-top: 20px;
 }

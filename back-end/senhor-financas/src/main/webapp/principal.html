@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Senhor Finanças</title>
-    <link rel="stylesheet" href="./css/principal.css">
+    <link rel="stylesheet" href="./css/receitas.css">
 </head>
 
 <body>
@@ -26,36 +26,50 @@
         </ul>
     </section>
 </header>
+
 <section class="principal">
     <div class="titulo">
         <h2>Receitas</h2>
     </div>
 </section>
+
 <section class="tabela">
-    <table>
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Descrição</th>
-            <th>Data</th>
-            <th>Valor</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-    </table>
+    <form id="formReceitas">
+        <table>
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descrição</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyReceitas"></tbody>
+            <tfoot>
+            <tr>
+                <th class="total-cell" colspan="5">Total - R$ <span id="totalReceitas">0.00</span></th>
+            </tr>
+            </tfoot>
+        </table>
+    </form>
 </section>
+
 <section class="section-botao">
-    <form>
+    <form action="">
         <div class="div-botao">
             <button class="botao" type="submit">Buscar</button>
         </div>
         <div class="div-botao">
-            <button class="botao" type="submit">Limpar</button>
+            <button class="botao" type="button" onclick="limparTabela()">Limpar</button>
         </div>
         <div class="div-botao">
             <button type="submit" class="botao" formaction="./cadastrarReceitas.html">Cadastrar</button>
         </div>
     </form>
 </section>
+
+<script src="./js/cadastrarReceita.js"></script>
 </body>
+
 </html>

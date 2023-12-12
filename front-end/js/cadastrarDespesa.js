@@ -69,33 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
     atualizarTabelaDespesas();
 });
 
-function limparTabela() {
-    // Tenta encontrar o corpo da tabela
-    const tbody = document.getElementById('tbodyDespesas');
-
-    // Certifica-se de que o corpo da tabela foi encontrado
-    if (tbody) {
-        // Limpa o conteúdo do corpo da tabela
-        tbody.innerHTML = '';
-
-        // Zera o valor total
-        const totalDespesasElement = document.getElementById('totalDespesas');
-        if (totalDespesasElement) {
-            totalDespesasElement.textContent = '0.00';
-        } else {
-            console.error('Elemento de totalDespesas não encontrado.');
-        }
-    } else {
-        console.error('Corpo da tabela não encontrado.');
-    }
-}
-
 async function atualizarTabelaDespesas() {
     const tabelaDespesasBody = document.getElementById('tbodyDespesas');
-    const totalDespesasElement = document.getElementById('totalDespesas');
 
-    if (!tabelaDespesasBody || !totalDespesasElement) {
-        console.error('Elemento com ID "tbodyDespesas" ou "totalDespesas" não encontrado.');
+    if (!tabelaDespesasBody) {
+        console.error('Elemento com ID "tbodyDespesas" não encontrado.');
         return;
     }
 
@@ -117,7 +95,6 @@ async function atualizarTabelaDespesas() {
         }
 
         const data = await response.json();
-        let totalDespesas = 0; // Variável para armazenar o total
 
         // Limpar o conteúdo apenas se houver dados
         if (data.length > 0) {
@@ -128,19 +105,16 @@ async function atualizarTabelaDespesas() {
 
                 let td_id = tr.insertCell();
                 let td_descricao = tr.insertCell();
-                let td_dataVencimento = tr.insertCell();
-                let td_dataPagamento = tr.insertCell();
+                let td_dtVencimento = tr.insertCell();
+                let td_dtPagamento = tr.insertCell();
                 let td_valor = tr.insertCell();
                 let td_acoes = tr.insertCell();
 
                 td_id.innerText = despesa.idDespesa;
                 td_descricao.innerText = despesa.descricao;
-                td_dataVencimento.innerText = formatarDataParaJSON(despesa.dataVencimento);
-                td_dataPagamento.innerText = despesa.dataPagamento ? formatarDataParaJSON(despesa.dataPagamento) : '-';
+                td_dtVencimento.innerText = formatarData(despesa.dataVencimento);
+                td_dtPagamento.innerText = despesa.dataPagamento ? formatarData(despesa.dataPagamento) : '-';
                 td_valor.innerText = formatarValor(despesa.valor);
-
-                // Adiciona o valor ao total
-                totalDespesas += despesa.valor;
 
                 let botoesAcoes = document.createElement('div');
                 botoesAcoes.className = 'botoes-acoes';
@@ -161,18 +135,21 @@ async function atualizarTabelaDespesas() {
 
                 td_acoes.appendChild(botoesAcoes);
             });
-
-            // Atualiza o texto do total
-            totalDespesasElement.innerText = formatarValor(totalDespesas);
-        } else {
-            // Caso não haja dados, limpe o total
-            totalDespesasElement.innerText = formatarValor(0);
         }
     } catch (error) {
         console.error('Erro ao obter a lista de despesas', error);
     }
 }
 
+function formatarData(data) {
+    const date = new Date(data);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
+}
 
 function formatarDataParaJSON(data) {
     const date = new Date(data);
@@ -217,36 +194,29 @@ async function excluirDespesa(despesa) {
         }
 
         console.log('Despesa excluída com sucesso');
-        await atualizarTabelaDespesas();
-        updateTotalDespesas();
-
-        // Mostrar mensagem de sucesso com alert
-        mostrarMensagem('Despesa excluída com sucesso', 'success');
+        atualizarTabelaDespesas();
     } catch (error) {
         console.error('Erro ao excluir a despesa', error);
-
-        // Mostrar mensagem de erro com alert
-        mostrarMensagem('Erro ao excluir a despesa', 'error');
     }
 }
-
-function mostrarMensagem(mensagem, tipo) {
-    if (tipo === 'success') {
-        alert(`SUCESSO: ${mensagem}`);
-    } else {
-        alert(`ERRO: ${mensagem}`);
-    }
-}
-
 
 async function cadastrarNovaDespesa() {
     const descricaoInput = document.getElementById('descricao');
     const valorInput = document.getElementById('valor');
-    const dataVencimentoInput = document.getElementById('dataVencimento');
-    const dataPagamentoInput = document.getElementById('dataPagamento');
+    const dtvencimentoInput = document.getElementById('dtvencimento');
+    const dtpagamentoInput = document.getElementById('dtpagamento');
 
-    if (!descricaoInput || !valorInput || !dataVencimentoInput) {
+    if (!descricaoInput || !valorInput || !dtvencimentoInput || !dtpagamentoInput) {
         console.error('Erro: Elemento de input não encontrado.');
+        return;
+    }
+
+    // Verifique se os valores dos campos de data são nulos ou vazios
+    const dtvencimentoValue = dtvencimentoInput.value.trim();
+    const dtpagamentoValue = dtpagamentoInput.value.trim();
+
+    if (!dtvencimentoValue || !dtpagamentoValue) {
+        console.error('Erro: Os campos de data não podem estar vazios.');
         return;
     }
 
@@ -261,8 +231,8 @@ async function cadastrarNovaDespesa() {
     const novaDespesa = {
         descricao: descricaoInput.value,
         valor: parseFloat(valorInput.value),
-        dataVencimento: formatarDataParaJSON(dataVencimentoInput.value),
-        dataPagamento: dataPagamentoInput && dataPagamentoInput.value.trim() ? formatarDataParaJSON(dataPagamentoInput.value.trim()) : null,
+        dtvencimento: formatarDataParaJSON(dtvencimentoValue),
+        dtpagamento: formatarDataParaJSON(dtpagamentoValue),
         idUsuario: idUsuarioLogado
     };
 
@@ -282,20 +252,12 @@ async function cadastrarNovaDespesa() {
         const data = await response.json();
         console.log('Nova despesa cadastrada com sucesso:', data);
 
-        // Mostrar mensagem de sucesso com alert
-        mostrarMensagem('Despesa cadastrada com sucesso', 'success');
-
-        // Redirecionar para a página de despesas
-        window.location.href = './despesas.html';
+        // Adicione aqui qualquer lógica adicional ou redirecionamento
 
     } catch (error) {
         console.error('Erro ao cadastrar a nova despesa:', error);
-
-        // Mostrar mensagem de erro com alert
-        mostrarMensagem('Erro ao cadastrar a despesa', 'error');
     }
 }
-
 
 async function editarDespesa(despesa) {
     if (!despesa || !despesa.idDespesa) {

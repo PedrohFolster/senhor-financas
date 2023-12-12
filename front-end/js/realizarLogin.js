@@ -1,3 +1,5 @@
+const form = document.querySelector('#formulario');
+
 async function logarUsuario() {
     const options = {
         method: "POST",
@@ -26,4 +28,6 @@ async function logarUsuario() {
         console.error("Erro ao realizar o login:", error);
         alert("Houve um problema no processo de login!");
     }
+
+    form.reset();
 }
