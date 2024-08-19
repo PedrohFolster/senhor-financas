@@ -20,8 +20,9 @@
 ---
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b7c0b52c-63c9-40fe-9d14-e2738576dc15" alt="Finance Management Project Screenshot" />
+  <img src="https://github.com/user-attachments/assets/c597541b-5da2-4738-81f1-74b7c872dd49" alt="Finance Management Project Screenshot">
 </p>
+
 
 ---
 
